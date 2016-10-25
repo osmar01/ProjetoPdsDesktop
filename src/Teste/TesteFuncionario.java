@@ -12,10 +12,10 @@ public class TesteFuncionario {
         EntityManager em = JPAUtil.getEntityManager();
         
         Funcionario fun = new Funcionario();
-        fun.setNome("Eduardo");
-        fun.setEndereco("rua x");
-        fun.setCpf("46587987");
-        fun.setTelefone("9234 4345");
+        fun.setNome("Jose");
+        fun.setEndereco("rua b");
+        fun.setCpf("4653 2133");
+        fun.setTelefone("9124 4345");
         
         
         em.getTransaction().begin();
