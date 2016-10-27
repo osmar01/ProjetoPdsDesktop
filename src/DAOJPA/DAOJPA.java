@@ -42,8 +42,5 @@ public class DAOJPA<Tipo> {
         Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.Descricao like '%"+descricao+"%'"); 
         return consulta.getResultList();
     }
-    public List<Tipo> listarCidade(Long id){
-        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.estado_id = "+id+""); 
-        return consulta.getResultList();
-    }
+    
 }
