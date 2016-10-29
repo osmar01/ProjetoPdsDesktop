@@ -1,45 +1,42 @@
-
-package TelasFuncionario;
+package TelasCliente;
 
 import DAOJPA.DAOJPA;
-import Modelo.Funcionario;
+import Modelo.Cliente;
 import Modelo.SexoEnum;
 import Util.JPAUtil;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 
-public class FuncionarioCadastraTela extends javax.swing.JFrame {
-    
-  
-    public FuncionarioCadastraTela() {
+
+public class ClienteCadastraTela extends javax.swing.JFrame {
+
+
+    public ClienteCadastraTela() {
         initComponents();
     }
-
-    public void insereFuncionario(){
+    public void insereCliente(){
         
-        Funcionario fun = new Funcionario();
-        fun.setNome(campoNome.getText());
-        fun.setEndereco(campoEndereco.getText());
-        fun.setTelefone(campoTelefone.getText());
-        fun.setCpf(campoCPF.getText());
-        fun.setDataNasc(campoDataNasc.getText());
-        fun.setEmail(campoEmail.getText());
-        fun.setLogin(campoLogin.getText());
-        fun.setSenha(campoSenha.getText());
+        Cliente cliente = new Cliente();
+        cliente.setNome(campoNome.getText());
+        cliente.setEndereco(campoEndereco.getText());
+        cliente.setTelefone(campoTelefone.getText());
+        cliente.setCpf(campoCPF.getText());
+        cliente.setDataNasc(campoDataNasc.getText());
+        cliente.setEmail(campoEmail.getText());
+        cliente.setCNH(campoCNH.getText());
         if (radioMasculino.isSelected())
-            fun.setSexo(SexoEnum.M);
+            cliente.setSexo(SexoEnum.M);
         else 
-            fun.setSexo(SexoEnum.F);
+            cliente.setSexo(SexoEnum.F);
         
         EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
         
-        DAOJPA<Funcionario> dao = new DAOJPA<>(em,Funcionario.class);
-        dao.Inserir(fun);
+        DAOJPA<Cliente> dao = new DAOJPA<>(em,Cliente.class);
+        dao.Inserir(cliente);
         em.getTransaction().commit();
         em.close();
-        limpaCampos();
-        JOptionPane.showMessageDialog(null, "Funcionario Cadastrado!!!");
+        JOptionPane.showMessageDialog(null, "Cliente Cadastrado!!!");
     }
     
     public void limpaCampos(){
@@ -49,18 +46,17 @@ public class FuncionarioCadastraTela extends javax.swing.JFrame {
         campoTelefone.setText("");
         campoEmail.setText("");
         campoDataNasc.setText("");
-        campoLogin.setText("");
-        campoSenha.setText("");
+        campoCNH.setText("");
         radioMasculino.setSelected(false);
         radioFeminino.setSelected(false);
         
     }
- 
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -72,28 +68,26 @@ public class FuncionarioCadastraTela extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         campoNome = new javax.swing.JTextField();
         campoTelefone = new javax.swing.JTextField();
         campoCPF = new javax.swing.JTextField();
         campoEndereco = new javax.swing.JTextField();
         radioMasculino = new javax.swing.JRadioButton();
         radioFeminino = new javax.swing.JRadioButton();
-        campoSenha = new javax.swing.JTextField();
+        campoCNH = new javax.swing.JTextField();
         campoEmail = new javax.swing.JTextField();
-        campoLogin = new javax.swing.JTextField();
         botaoCadastrar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         campoDataNasc = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastrar Funcionario");
+        setTitle("CadastrarCliente");
 
         jPanel1.setBackground(new java.awt.Color(246, 253, 253));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setText("Cadastrar Funcionário");
+        jLabel1.setText("Cadastrar Cliente");
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel2.setText("Nome");
@@ -114,15 +108,10 @@ public class FuncionarioCadastraTela extends javax.swing.JFrame {
         jLabel7.setText("Sexo");
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel8.setText("Senha");
+        jLabel8.setText("CNH");
 
-        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel9.setText("Login");
-
-        buttonGroup1.add(radioMasculino);
         radioMasculino.setText("Masculino");
 
-        buttonGroup1.add(radioFeminino);
         radioFeminino.setText("Feminino");
 
         botaoCadastrar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -154,9 +143,6 @@ public class FuncionarioCadastraTela extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -183,40 +169,37 @@ public class FuncionarioCadastraTela extends javax.swing.JFrame {
                                             .addComponent(jLabel5)
                                             .addGap(4, 4, 4)
                                             .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(116, 116, 116)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(radioMasculino)
+                                    .addComponent(radioFeminino)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(109, 109, 109)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel8))
+                                        .addGap(4, 4, 4)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(campoCNH, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addContainerGap()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel3)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel6)
-                                        .addGap(4, 4, 4)
-                                        .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(19, 19, 19)
-                                        .addComponent(jLabel9)
-                                        .addGap(2, 2, 2)
-                                        .addComponent(campoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(15, 15, 15)
-                                        .addComponent(jLabel8)
-                                        .addGap(4, 4, 4)
-                                        .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(botaoCadastrar)
-                                        .addGap(113, 113, 113)
-                                        .addComponent(botaoCancelar))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(25, 25, 25)
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(radioMasculino)
-                                            .addComponent(radioFeminino))))))))
+                                    .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel1)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -262,23 +245,15 @@ public class FuncionarioCadastraTela extends javax.swing.JFrame {
                         .addGap(1, 1, 1)
                         .addComponent(jLabel6))
                     .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel9))
-                    .addComponent(campoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel8))
-                    .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoCNH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoCadastrar)
                     .addComponent(botaoCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -299,14 +274,17 @@ public class FuncionarioCadastraTela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-        insereFuncionario();
+        insereCliente();
+        limpaCampos();
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
-   
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -321,20 +299,20 @@ public class FuncionarioCadastraTela extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FuncionarioCadastraTela().setVisible(true);
+                new ClienteCadastraTela().setVisible(true);
             }
         });
     }
@@ -342,14 +320,12 @@ public class FuncionarioCadastraTela extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoCancelar;
-    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JTextField campoCNH;
     private javax.swing.JTextField campoCPF;
     private javax.swing.JTextField campoDataNasc;
     private javax.swing.JTextField campoEmail;
     private javax.swing.JTextField campoEndereco;
-    private javax.swing.JTextField campoLogin;
     private javax.swing.JTextField campoNome;
-    private javax.swing.JTextField campoSenha;
     private javax.swing.JTextField campoTelefone;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -360,7 +336,6 @@ public class FuncionarioCadastraTela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;

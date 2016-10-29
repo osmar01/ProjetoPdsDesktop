@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import javax.persistence.Column;
@@ -9,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Funcionario {
+public class Cliente {
     
     @Id
     @GeneratedValue
@@ -37,12 +36,9 @@ public class Funcionario {
     private String DataNasc;
     
     @Column(nullable = false, length = 100)
-    private String login;
-    
-    @Column(nullable = false, length = 100)
-    private String senha;
-    
-    public Funcionario() {
+    private String CNH;
+
+    public Cliente() {
     }
 
     public Long getId() {
@@ -52,7 +48,7 @@ public class Funcionario {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getNome() {
         return nome;
     }
@@ -101,22 +97,6 @@ public class Funcionario {
         this.email = email;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
     public String getDataNasc() {
         return DataNasc;
     }
@@ -124,5 +104,15 @@ public class Funcionario {
     public void setDataNasc(String DataNasc) {
         this.DataNasc = DataNasc;
     }
+
+    public String getCNH() {
+        return CNH;
+    }
+
+    public void setCNH(String CNH) {
+        this.CNH = CNH;
+    }
+    
+    
     
 }

@@ -5,6 +5,7 @@
  */
 package TelaInicial;
 
+import TelasCliente.ClientePesquisaTela;
 import TelasFuncionario.FuncionarioPesquisaTela;
 
 /**
@@ -70,6 +71,11 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
         jMenuItem1.setText("Cliente");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Funcionario");
@@ -128,6 +134,11 @@ public class TelaInicial extends javax.swing.JFrame {
         FuncionarioPesquisaTela funcionarioPesquisaTela = new FuncionarioPesquisaTela();
         funcionarioPesquisaTela.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        ClientePesquisaTela clientePesquisaTela = new ClientePesquisaTela();
+        clientePesquisaTela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
