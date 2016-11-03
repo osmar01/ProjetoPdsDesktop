@@ -1,27 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ModeloTabela;
 
 import Modelo.Funcionario;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-/**
- *
- * @author Junnio
- */
 public class FuncionarioTabelaModelo extends AbstractTableModel{
     private List<Funcionario> listaFuncionario;
 
     public FuncionarioTabelaModelo(List<Funcionario> listaFuncionario) {
         this.listaFuncionario = listaFuncionario;
     }
-    
-    
-    
+     
     @Override
     public int getRowCount() {
         return listaFuncionario.size();
