@@ -68,6 +68,7 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel7 = new javax.swing.JPanel();
         jLabel46 = new javax.swing.JLabel();
         jSeparator11 = new javax.swing.JSeparator();
@@ -122,8 +123,10 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
         jLabel53.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel53.setText("CNH");
 
+        buttonGroup1.add(radioMasculino);
         radioMasculino.setText("Masculino");
 
+        buttonGroup1.add(radioFemino);
         radioFemino.setText("Feminino");
 
         botaoSalvar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -336,6 +339,7 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField campoCNH;
     private javax.swing.JTextField campoCPF;
     private javax.swing.JTextField campoDataNasc;

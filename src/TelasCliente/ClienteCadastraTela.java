@@ -57,6 +57,7 @@ public class ClienteCadastraTela extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -110,8 +111,10 @@ public class ClienteCadastraTela extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel8.setText("CNH");
 
+        buttonGroup1.add(radioMasculino);
         radioMasculino.setText("Masculino");
 
+        buttonGroup1.add(radioFeminino);
         radioFeminino.setText("Feminino");
 
         botaoCadastrar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -320,6 +323,7 @@ public class ClienteCadastraTela extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoCancelar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField campoCNH;
     private javax.swing.JTextField campoCPF;
     private javax.swing.JTextField campoDataNasc;

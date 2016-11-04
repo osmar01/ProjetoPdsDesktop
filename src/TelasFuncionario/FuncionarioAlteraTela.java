@@ -67,6 +67,7 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel7 = new javax.swing.JPanel();
         jLabel46 = new javax.swing.JLabel();
         jSeparator11 = new javax.swing.JSeparator();
@@ -126,8 +127,10 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
         jLabel54.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel54.setText("Login");
 
+        buttonGroup1.add(radioMasculino);
         radioMasculino.setText("Masculino");
 
+        buttonGroup1.add(radioFemino);
         radioFemino.setText("Feminino");
 
         botaoSalvar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -352,6 +355,7 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField campoCPF;
     private javax.swing.JTextField campoDataNasc;
     private javax.swing.JTextField campoEmail;

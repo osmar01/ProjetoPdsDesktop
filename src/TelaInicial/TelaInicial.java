@@ -7,6 +7,7 @@ import ModeloTabela.CategoriaTabelaModelo;
 import ModeloTabela.ProdutoTabelaModelo;
 import TelaCategoria.CategoriaPesquisaTela;
 import TelaLogin.TelaLogin;
+import TelaProduto.ProdutoConsultaTela;
 import TelaProduto.ProdutoPesquisaTela;
 import TelasCliente.ClientePesquisaTela;
 import TelasFuncionario.FuncionarioPesquisaTela;
@@ -21,6 +22,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private List<Produto> listaProduto;
     private Categoria cat = new Categoria();
     private Categoria catSelecionada;
+    private Produto produtoSelecionado;
    
     public TelaInicial() {
         initComponents();
@@ -77,6 +79,27 @@ public class TelaInicial extends javax.swing.JFrame {
         entityManager.getTransaction().commit();
         entityManager.close();
     }
+    
+    
+    //---------------------------------------
+    public Produto produtoSelecionado(){
+        produtoSelecionado = listaProduto.get(tabelaProduto.getSelectedRow());
+        return produtoSelecionado;
+    }
+    
+    public void selecionarLinhaTabelaProduto(java.awt.event.MouseEvent evt){
+        tabelaProduto.clearSelection();
+        int linha = tabelaProduto.rowAtPoint(evt.getPoint());
+        tabelaProduto.setRowSelectionInterval(linha, linha);
+    }
+    
+    public void abrirProdutoConsultaTela(){
+        ProdutoConsultaTela consultaTela = new ProdutoConsultaTela();
+        consultaTela.setProduto(produtoSelecionado());
+        consultaTela.setVisible(true);
+    
+    }
+   
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -213,18 +236,20 @@ public class TelaInicial extends javax.swing.JFrame {
 
         tabelaProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nome", "Preço", "Descrição", "Categoria"
             }
         ));
         tabelaProduto.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tabelaProdutoFocusGained(evt);
+            }
+        });
+        tabelaProduto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tabelaProdutoMouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(tabelaProduto);
@@ -427,6 +452,14 @@ public class TelaInicial extends javax.swing.JFrame {
        preencherTabelaProduto();
        Pesquisar();
     }//GEN-LAST:event_formWindowGainedFocus
+
+    private void tabelaProdutoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutoMouseReleased
+        produtoSelecionado();
+        selecionarLinhaTabelaProduto(evt);
+        if(evt.getClickCount() > 1){
+           abrirProdutoConsultaTela();
+        }
+    }//GEN-LAST:event_tabelaProdutoMouseReleased
 
     /**
      * @param args the command line arguments
