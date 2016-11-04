@@ -356,10 +356,10 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setBorder(null);
-        jMenu2.setText("Alugueis");
+        jMenu2.setText("Movimentacoes");
         jMenu2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
-        jMenuItem5.setText("Adicionar");
+        jMenuItem5.setText("Alugueis");
         jMenu2.add(jMenuItem5);
 
         jMenuBar1.add(jMenu2);
