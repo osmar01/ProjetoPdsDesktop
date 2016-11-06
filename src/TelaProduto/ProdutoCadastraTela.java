@@ -28,6 +28,8 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         List<Categoria> listaCategoria = dao.listar("");         
         comboboxCategoria.removeAllItems();
         
+        comboboxCategoria.addItem("");
+        
         for (Categoria e: listaCategoria){
             comboboxCategoria.addItem(e.getNome());   
         }
@@ -70,6 +72,8 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         campoNome.setText("");
         campoDescricao.setText("");
         campoPreco.setText("");
+        spinnerQtde.setValue(0);
+        comboboxCategoria.setSelectedIndex(0);
     }
  
     @SuppressWarnings("unchecked")
