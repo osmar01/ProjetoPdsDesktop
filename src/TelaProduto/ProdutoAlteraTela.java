@@ -105,7 +105,7 @@ public class ProdutoAlteraTela extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(246, 253, 253));
 
         jLabel46.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel46.setText("Alterar Funcionário");
+        jLabel46.setText("Alterar Produto");
 
         jLabel47.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel47.setText("Nome");

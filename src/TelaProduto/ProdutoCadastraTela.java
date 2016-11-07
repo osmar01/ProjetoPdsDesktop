@@ -1,4 +1,3 @@
-
 package TelaProduto;
 
 import TelasFuncionario.*;
@@ -28,7 +27,7 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         List<Categoria> listaCategoria = dao.listar("");         
         comboboxCategoria.removeAllItems();
         
-        comboboxCategoria.addItem("");
+        comboboxCategoria.addItem("Selecione...");
         
         for (Categoria e: listaCategoria){
             comboboxCategoria.addItem(e.getNome());   
@@ -45,12 +44,9 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         Produto produto = new Produto();
         produto.setNome(campoNome.getText());
         produto.setPreco(Double.parseDouble(campoPreco.getText()));
-        
-        
         produto.setDescricao(campoDescricao.getText());
         produto.setQuantidade(Integer.parseInt(spinnerQtde.getValue().toString()));
-        
-       
+               
         //---------------
         String nomeCategoria= comboboxCategoria.getSelectedItem().toString();
         DAOJPA<Categoria> daoCategoria = new DAOJPA<>(em,Categoria.class);
@@ -58,8 +54,7 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         Categoria categoria = listaCategoria.get(0);
         produto.setCategoria(categoria);
         //--------------------   
-        
-        
+                
         DAOJPA<Produto> dao = new DAOJPA<>(em,Produto.class);
         dao.Inserir(produto);
         em.getTransaction().commit();
@@ -90,13 +85,13 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         campoNome = new javax.swing.JTextField();
-        campoPreco = new javax.swing.JTextField();
         campoDescricao = new javax.swing.JTextField();
         botaoCadastrar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         comboboxCategoria = new javax.swing.JComboBox<>();
         spinnerQtde = new javax.swing.JSpinner();
+        campoPreco = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Funcionario");
@@ -137,7 +132,7 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel10.setText("Quantidade");
 
-        comboboxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboboxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         spinnerQtde.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
@@ -147,15 +142,6 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -178,7 +164,7 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
                                             .addComponent(spinnerQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel5)
-                                            .addGap(4, 4, 4)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(campoPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addContainerGap()
@@ -190,7 +176,16 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addComponent(botaoCadastrar)
                                     .addGap(113, 113, 113)
-                                    .addComponent(botaoCancelar))))))
+                                    .addComponent(botaoCancelar)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -206,11 +201,11 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(campoPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(spinnerQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
