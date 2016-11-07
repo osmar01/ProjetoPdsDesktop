@@ -25,6 +25,9 @@ public class Produto {
     @Column(nullable = false, length = 100)
     private String descricao;
     
+    @Column(nullable = false)
+    private String caminho;
+    
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Categoria categoria;
 
@@ -69,6 +72,14 @@ public class Produto {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getCaminho() {
+        return caminho;
+    }
+
+    public void setCaminho(String caminho) {
+        this.caminho = caminho;
     }
 
     public Categoria getCategoria() {
