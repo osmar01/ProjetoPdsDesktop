@@ -291,6 +291,13 @@
         <Component class="javax.swing.JTextField" name="campoPreco">
         </Component>
         <Component class="javax.swing.JLabel" name="campoImagem">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="botaoAddImagem">
           <Properties>

@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ProdutoCadastraTela extends javax.swing.JFrame {
     public String caminho;
@@ -72,6 +73,7 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         campoNome.setText("");
         campoDescricao.setText("");
         campoPreco.setText("");
+        //campoImagem.removeAll();
         spinnerQtde.setValue(0);
         comboboxCategoria.setSelectedIndex(0);
     }
@@ -142,6 +144,8 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         comboboxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         spinnerQtde.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        campoImagem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         botaoAddImagem.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         botaoAddImagem.setText("Adicionar Imagem");
@@ -285,21 +289,18 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         arquivo.setDialogTitle("Selecione a imagem do produto...");
         arquivo.setFileSelectionMode(JFileChooser.FILES_ONLY);
         
-        //FileNameExtensionFilter
-        //arquivo.setFileFilter(filter);
-        arquivo.showOpenDialog(this);
-        /*arquivo.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagem", "jpg", "png");
+        arquivo.setFileFilter(filter);
         
         int op = arquivo.showOpenDialog(this);
         
         if(op == JFileChooser.APPROVE_OPTION){
-            File file = new File("Caminho");
-            file = arquivo.getSelectedFile();
+            File file = arquivo.getSelectedFile();
             caminho = file.getAbsolutePath();
             
             ImageIcon img = new ImageIcon(arquivo.getSelectedFile().getPath());
             campoImagem.setIcon(new ImageIcon(img.getImage().getScaledInstance(campoImagem.getWidth(), campoImagem.getHeight(), Image.SCALE_DEFAULT)));
-            */
+        }
     }//GEN-LAST:event_botaoAddImagemActionPerformed
 
    
