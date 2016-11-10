@@ -30,7 +30,7 @@ public class Produto {
     
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Categoria categoria;
-
+    
     public Produto() {
     }
 

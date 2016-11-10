@@ -36,6 +36,9 @@ public class Aluguel {
     
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Produto produto;
+    
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Cliente clienteAluguel;
 
     public Aluguel() {
     }
@@ -94,6 +97,14 @@ public class Aluguel {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public Cliente getClienteAluguel() {
+        return clienteAluguel;
+    }
+
+    public void setClienteAluguel(Cliente clienteAluguel) {
+        this.clienteAluguel = clienteAluguel;
     }
     
     

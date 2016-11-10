@@ -4,9 +4,11 @@ package TelaInicial;
 import TelaProduto.*;
 import TelasFuncionario.*;
 import Modelo.Funcionario;
+import Modelo.ItemDeProduto;
 import Modelo.Produto;
 import Util.JPAUtil;
 import java.awt.Image;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -14,6 +16,8 @@ import javax.swing.JOptionPane;
 
 public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
     private Produto produto;
+    private ItemDeProduto itemDeProduto = new ItemDeProduto();
+    private List<ItemDeProduto> listaItensProdutos;
   
     public ProdutoConsultaTelaInicial() {
         initComponents();
@@ -22,6 +26,10 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
         this.produto = produto;
         setLabels();
     }
+    public void setListaItensProdutos(List<ItemDeProduto> listaItensProdutos){
+        this.listaItensProdutos = listaItensProdutos;
+    }
+    
     public void setLabels(){
         labelNome.setText(produto.getNome());
         labelDescricao.setText(produto.getDescricao());
@@ -33,7 +41,21 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
         labelImagem.setIcon(new ImageIcon(img.getImage().getScaledInstance(labelImagem.getWidth(), labelImagem.getHeight(), Image.SCALE_DEFAULT)));
     }
     
+    //--------------------INSERINDO ITEM DE PRODUTO---------------------------
     
+    public void inserirItem(){
+        itemDeProduto.setHora(Integer.parseInt(spinnerHora.getValue().toString()));
+        itemDeProduto.setMinuto(Integer.parseInt(spinnerMinuto.getValue().toString()));
+        itemDeProduto.setQuantidade(Integer.parseInt(spinnerQtde.getValue().toString()));
+        itemDeProduto.setProduto(produto);
+        itemDeProduto.setTotal(1000.00);
+    }
+    
+    public void inserirLista(){
+        listaItensProdutos.add(itemDeProduto);
+        JOptionPane.showMessageDialog(null, "Produto adicionado na sua Lista");
+    
+    }
    
   
     @SuppressWarnings("unchecked")
@@ -57,11 +79,11 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         labelQtde = new javax.swing.JLabel();
         labelImagem = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        spinnerQtde = new javax.swing.JSpinner();
         jLabel12 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
+        spinnerHora = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        jSpinner3 = new javax.swing.JSpinner();
+        spinnerMinuto = new javax.swing.JSpinner();
         jLabel9 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -122,17 +144,17 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
 
         labelQtde.setText("*********************");
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spinnerQtde.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel12.setText("Quantidade");
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(0, 0, 8, 1));
+        spinnerHora.setModel(new javax.swing.SpinnerNumberModel(0, 0, 8, 1));
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel6.setText("Horas");
 
-        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(30, 0, 45, 15));
+        spinnerMinuto.setModel(new javax.swing.SpinnerNumberModel(30, 0, 45, 15));
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel9.setText("Minutos");
@@ -165,15 +187,15 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
                         .addGap(54, 54, 54)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spinnerQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spinnerHora, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spinnerMinuto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -258,10 +280,10 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinnerQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinnerHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinnerMinuto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(jLabel14)
                     .addComponent(jLabel13))
@@ -292,7 +314,9 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
-        
+        inserirItem();
+        inserirLista();
+        dispose();
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
@@ -352,14 +376,14 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
     private javax.swing.JLabel labelCategoria;
     private javax.swing.JLabel labelDescricao;
     private javax.swing.JLabel labelImagem;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelPreco;
     private javax.swing.JLabel labelQtde;
+    private javax.swing.JSpinner spinnerHora;
+    private javax.swing.JSpinner spinnerMinuto;
+    private javax.swing.JSpinner spinnerQtde;
     // End of variables declaration//GEN-END:variables
 }
