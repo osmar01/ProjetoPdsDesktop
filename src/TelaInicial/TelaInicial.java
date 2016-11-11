@@ -2,10 +2,12 @@ package TelaInicial;
 
 import DAOJPA.DAOJPA;
 import Modelo.Categoria;
+import Modelo.Cliente;
 import Modelo.ItemDeProduto;
 import Modelo.Produto;
 import ModeloTabela.CategoriaTabelaModelo;
 import ModeloTabela.ProdutoAluguelTabelaModelo;
+import TelaAluguel.AluguelCadastraTela;
 import TelaCategoria.CategoriaPesquisaTela;
 import TelaProduto.ProdutoPesquisaTela;
 import TelasCliente.ClientePesquisaTela;
@@ -15,93 +17,105 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 
-
 public class TelaInicial extends javax.swing.JFrame {
+
     private List<Categoria> listaCategorias;
     private List<Produto> listaProduto;
     private List<ItemDeProduto> listaItensProdutos = new ArrayList<ItemDeProduto>();
     private Categoria cat = new Categoria();
     private Categoria catSelecionada;
+    private Cliente cliente = new Cliente();
+    
+
     private Produto produtoSelecionado;
-   
+
     public TelaInicial() {
         initComponents();
         Pesquisar();
     }
-    
-    
+
     //----------------------- preencher TabelaCategoria----------------
-    public void pesquisarBD(){
+    public void pesquisarBD() {
         EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
-        DAOJPA<Categoria> dao = new DAOJPA<>(entityManager,Categoria.class);
+        DAOJPA<Categoria> dao = new DAOJPA<>(entityManager, Categoria.class);
         listaCategorias = dao.listar("");
         entityManager.getTransaction().commit();
         entityManager.close();
     }
-    
-    public void preencherTabelaCategoria(){
+
+    public void preencherTabelaCategoria() {
         CategoriaTabelaModelo modelo = new CategoriaTabelaModelo(listaCategorias);
         tabelaCategorias.setModel(modelo);
     }
-    
-    public void Pesquisar(){
+
+    public void Pesquisar() {
         pesquisarBD();
         preencherTabelaCategoria();
     }
     //---------------------------------------------------------------
-    
-    public Categoria categoriaSelecionada(){
+
+    public Categoria categoriaSelecionada() {
         catSelecionada = listaCategorias.get(tabelaCategorias.getSelectedRow());
         return catSelecionada;
     }
-    
-    public void selecionarLinhaTabelaCategoria(java.awt.event.MouseEvent evt){
+
+    public void selecionarLinhaTabelaCategoria(java.awt.event.MouseEvent evt) {
         tabelaCategorias.clearSelection();
         int linha = tabelaCategorias.rowAtPoint(evt.getPoint());
         tabelaCategorias.setRowSelectionInterval(linha, linha);
     }
-    
+
     //-----------------------------------
-    
-    public void preencherTabelaProduto(){
+    public void preencherTabelaProduto() {
         catSelecionada = categoriaSelecionada();
-        
+
         EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
-        DAOJPA<Categoria> dao = new DAOJPA<>(entityManager,Categoria.class);
+        DAOJPA<Categoria> dao = new DAOJPA<>(entityManager, Categoria.class);
         catSelecionada = dao.Consultar(catSelecionada.getId());
-                
+
         listaProduto = catSelecionada.getListaProdutos();
         ProdutoAluguelTabelaModelo modelo = new ProdutoAluguelTabelaModelo(listaProduto);
         tabelaProduto.setModel(modelo);
-        
+
         entityManager.getTransaction().commit();
         entityManager.close();
     }
-    
-    
+
     //---------------------------------------
-    public Produto produtoSelecionado(){
+    public Produto produtoSelecionado() {
         produtoSelecionado = listaProduto.get(tabelaProduto.getSelectedRow());
         return produtoSelecionado;
     }
-    
-    public void selecionarLinhaTabelaProduto(java.awt.event.MouseEvent evt){
+
+    public void selecionarLinhaTabelaProduto(java.awt.event.MouseEvent evt) {
         tabelaProduto.clearSelection();
         int linha = tabelaProduto.rowAtPoint(evt.getPoint());
         tabelaProduto.setRowSelectionInterval(linha, linha);
     }
-    
-    public void abrirProdutoConsultaTela(){
+
+    public void abrirProdutoConsultaTela() {
         ProdutoConsultaTelaInicial consultaTela = new ProdutoConsultaTelaInicial();
         consultaTela.setListaItensProdutos(listaItensProdutos);
         consultaTela.setProduto(produtoSelecionado());
         consultaTela.setVisible(true);
-    
+
     }
-   
+   //------------------------------INSERE ITEM DE PRODUTO ------------------------------
+
     
+
+    public void abrirTelaFinalizarAluguel() {
+        FinalizarAluguelTela aluguelTela = new FinalizarAluguelTela();
+        aluguelTela.setCliente(cliente);
+        aluguelTela.setListaItensProdutos(listaItensProdutos);
+        aluguelTela.setVisible(true);
+
+    }
+
+    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -122,7 +136,7 @@ public class TelaInicial extends javax.swing.JFrame {
         tabelaCategorias = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaProduto = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        botaoFinalizarLista = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -268,8 +282,13 @@ public class TelaInicial extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabelaProduto);
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton2.setText("Finalizar Lista");
+        botaoFinalizarLista.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        botaoFinalizarLista.setText("Finalizar Lista");
+        botaoFinalizarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFinalizarListaActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton3.setText("Ver Lista Produtos");
@@ -293,7 +312,7 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                        .addComponent(botaoFinalizarLista, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,7 +331,7 @@ public class TelaInicial extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botaoFinalizarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(0, 9, Short.MAX_VALUE))
         );
@@ -404,6 +423,11 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenu2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
         jMenuItem5.setText("Alugueis");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
         jMenuBar1.add(jMenu2);
@@ -458,32 +482,41 @@ public class TelaInicial extends javax.swing.JFrame {
     private void tabelaCategoriasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCategoriasMouseReleased
         categoriaSelecionada();
         selecionarLinhaTabelaCategoria(evt);
-        if(evt.getClickCount() > 1){
-           preencherTabelaProduto();
+        if (evt.getClickCount() > 1) {
+            preencherTabelaProduto();
         }
     }//GEN-LAST:event_tabelaCategoriasMouseReleased
 
     private void tabelaProdutoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelaProdutoFocusGained
-       
+
     }//GEN-LAST:event_tabelaProdutoFocusGained
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-       preencherTabelaProduto();
-       Pesquisar();
+        preencherTabelaProduto();
+        Pesquisar();
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void tabelaProdutoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutoMouseReleased
         produtoSelecionado();
         selecionarLinhaTabelaProduto(evt);
-        if(evt.getClickCount() > 1){
-           abrirProdutoConsultaTela();
+        if (evt.getClickCount() > 1) {
+            abrirProdutoConsultaTela();
         }
     }//GEN-LAST:event_tabelaProdutoMouseReleased
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-         produtoSelecionado();
-         abrirProdutoConsultaTela();
+        produtoSelecionado();
+        abrirProdutoConsultaTela();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void botaoFinalizarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarListaActionPerformed
+        abrirTelaFinalizarAluguel();
+    }//GEN-LAST:event_botaoFinalizarListaActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        AluguelCadastraTela aluguelCadastraTela = new AluguelCadastraTela();
+        aluguelCadastraTela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -522,8 +555,8 @@ public class TelaInicial extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MenuItemProduto;
+    private javax.swing.JButton botaoFinalizarLista;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;

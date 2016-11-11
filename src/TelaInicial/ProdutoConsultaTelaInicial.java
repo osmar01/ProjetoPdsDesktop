@@ -1,6 +1,7 @@
 
 package TelaInicial;
 
+import Modelo.Cliente;
 import TelaProduto.*;
 import TelasFuncionario.*;
 import Modelo.Funcionario;
@@ -16,7 +17,6 @@ import javax.swing.JOptionPane;
 
 public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
     private Produto produto;
-    private ItemDeProduto itemDeProduto = new ItemDeProduto();
     private List<ItemDeProduto> listaItensProdutos;
   
     public ProdutoConsultaTelaInicial() {
@@ -44,18 +44,19 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
     //--------------------INSERINDO ITEM DE PRODUTO---------------------------
     
     public void inserirItem(){
+        ItemDeProduto itemDeProduto = new ItemDeProduto();
+        
         itemDeProduto.setHora(Integer.parseInt(spinnerHora.getValue().toString()));
         itemDeProduto.setMinuto(Integer.parseInt(spinnerMinuto.getValue().toString()));
         itemDeProduto.setQuantidade(Integer.parseInt(spinnerQtde.getValue().toString()));
         itemDeProduto.setProduto(produto);
         itemDeProduto.setTotal(1000.00);
-    }
-    
-    public void inserirLista(){
+        
         listaItensProdutos.add(itemDeProduto);
         JOptionPane.showMessageDialog(null, "Produto adicionado na sua Lista");
-    
     }
+    
+    
    
   
     @SuppressWarnings("unchecked")
@@ -144,7 +145,7 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
 
         labelQtde.setText("*********************");
 
-        spinnerQtde.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spinnerQtde.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel12.setText("Quantidade");
@@ -154,7 +155,7 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel6.setText("Horas");
 
-        spinnerMinuto.setModel(new javax.swing.SpinnerNumberModel(30, 0, 45, 15));
+        spinnerMinuto.setModel(new javax.swing.SpinnerNumberModel(30, 0, 30, 30));
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel9.setText("Minutos");
@@ -315,7 +316,6 @@ public class ProdutoConsultaTelaInicial extends javax.swing.JFrame {
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         inserirItem();
-        inserirLista();
         dispose();
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 

@@ -14,20 +14,20 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 
-public class AluguelCadastraTela extends javax.swing.JFrame {
+public class AluguelDetalhesTela extends javax.swing.JFrame {
     private List<Aluguel> listaAluguel = new ArrayList<>();
     
     private Aluguel aluguel = new Aluguel();
     private Aluguel aluguelSelecionado = new Aluguel();
    
-    public AluguelCadastraTela() {
+    public AluguelDetalhesTela() {
         initComponents();
         Pesquisar();
     }
     
     public void preencherFiltro(){
         Cliente cliente = new Cliente();
-        cliente.setNome(campoNome.getText());
+       // cliente.setNome(campoNome.getText());
         aluguel.setClienteAluguel(cliente);
     }
    
@@ -76,22 +76,13 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        campoNome = new javax.swing.JTextField();
-        botaoPesquisar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaAluguel = new javax.swing.JTable();
         botaoCadastrar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
-        botaoCadastrar1 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tabelaAluguel1 = new javax.swing.JTable();
         botaoCadastrar3 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        campoNome1 = new javax.swing.JTextField();
-        botaoPesquisar1 = new javax.swing.JButton();
-        botaoCadastrar4 = new javax.swing.JButton();
-        botaoCadastrar5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisar Funcionario");
@@ -106,15 +97,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(246, 253, 253));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setText("Cadastrar Alugueis");
-
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel2.setText("CPF");
-
-        campoNome.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-
-        botaoPesquisar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        botaoPesquisar.setText("Pesquisar");
+        jLabel1.setText("Gerenciar Alugueis");
 
         tabelaAluguel.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tabelaAluguel.setModel(new javax.swing.table.DefaultTableModel(
@@ -122,7 +105,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "CPF", "Status"
+                "Nome do Produto", "Categoria", "Quantidade", "Valor"
             }
         ));
         tabelaAluguel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -133,7 +116,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabelaAluguel);
 
         botaoCadastrar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        botaoCadastrar.setText("Inciar");
+        botaoCadastrar.setText("Remover");
         botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCadastrarActionPerformed(evt);
@@ -148,145 +131,73 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
             }
         });
 
-        botaoCadastrar1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        botaoCadastrar1.setText("Detalhes");
-        botaoCadastrar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoCadastrar1ActionPerformed(evt);
-            }
-        });
-
-        tabelaAluguel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        tabelaAluguel1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "CPF", "Hora inicio", "Status"
-            }
-        ));
-        tabelaAluguel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tabelaAluguel1MouseReleased(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tabelaAluguel1);
-
         botaoCadastrar3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        botaoCadastrar3.setText("Detalhes");
+        botaoCadastrar3.setText("Alterar");
         botaoCadastrar3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCadastrar3ActionPerformed(evt);
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel3.setText("CPF");
+        jLabel2.setText("Valor Total");
 
-        campoNome1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-
-        botaoPesquisar1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        botaoPesquisar1.setText("Pesquisar");
-
-        botaoCadastrar4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        botaoCadastrar4.setText("Devolucao");
-        botaoCadastrar4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoCadastrar4ActionPerformed(evt);
-            }
-        });
-
-        botaoCadastrar5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        botaoCadastrar5.setText("Retirar da Lista");
-        botaoCadastrar5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoCadastrar5ActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("$$$$$$$$");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2)
-                    .addComponent(jSeparator1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(botaoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(campoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(botaoPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(botaoCadastrar1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(botaoCadastrar4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(botaoCadastrar5, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                                    .addComponent(botaoCadastrar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(botaoCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addGap(87, 87, 87))
+                                    .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(botaoCadastrar3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))))))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoPesquisar)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(botaoCadastrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(11, 11, 11)
                         .addComponent(botaoCadastrar3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botaoCadastrar5)))
-                .addGap(52, 52, 52)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoNome1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoPesquisar1)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(botaoCadastrar1)
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCadastrar4)))
-                .addGap(18, 18, 18)
+                        .addComponent(jLabel3)))
+                .addGap(15, 15, 15)
                 .addComponent(botaoCancelar)
-                .addGap(47, 47, 47))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -297,9 +208,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -327,25 +236,9 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tabelaAluguelMouseReleased
 
-    private void botaoCadastrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoCadastrar1ActionPerformed
-
-    private void tabelaAluguel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAluguel1MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaAluguel1MouseReleased
-
     private void botaoCadastrar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoCadastrar3ActionPerformed
-
-    private void botaoCadastrar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoCadastrar4ActionPerformed
-
-    private void botaoCadastrar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoCadastrar5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,45 +257,38 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AluguelCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AluguelDetalhesTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AluguelCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AluguelDetalhesTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AluguelCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AluguelDetalhesTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AluguelCadastraTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AluguelDetalhesTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AluguelCadastraTela().setVisible(true);
+                new AluguelDetalhesTela().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;
-    private javax.swing.JButton botaoCadastrar1;
     private javax.swing.JButton botaoCadastrar3;
-    private javax.swing.JButton botaoCadastrar4;
-    private javax.swing.JButton botaoCadastrar5;
     private javax.swing.JButton botaoCancelar;
-    private javax.swing.JButton botaoPesquisar;
-    private javax.swing.JButton botaoPesquisar1;
-    private javax.swing.JTextField campoNome;
-    private javax.swing.JTextField campoNome1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable tabelaAluguel;
-    private javax.swing.JTable tabelaAluguel1;
     // End of variables declaration//GEN-END:variables
 }

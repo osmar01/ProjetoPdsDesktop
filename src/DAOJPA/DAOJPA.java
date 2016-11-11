@@ -43,4 +43,9 @@ public class DAOJPA<Tipo> {
         return consulta.getResultList();
     }
     
+    public List<Tipo> listarCPF(String cpf){
+        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.cpf like '%"+cpf+"%'"); 
+        return consulta.getResultList();
+    }
+    
 }
