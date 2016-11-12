@@ -31,6 +31,7 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
     public void setTelaConsulta(JFrame telaConsulta){
     this.telaConsulta=telaConsulta;
     }
+    
     public void preencheCampos(){
         campoNome.setText(cliente.getNome());
         campoCPF.setText(cliente.getCpf());
@@ -46,6 +47,7 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
             radioFeminino.setSelected(true);
     
     }
+    
     public void Atualizar(){
         EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
@@ -54,6 +56,7 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
         entityManager.close();
         JOptionPane.showMessageDialog(null, "Dados Atualizados");
     }
+    
     public void atualizaDados(){
         cliente.setNome(campoNome.getText());
         cliente.setCpf(campoCPF.getText());
