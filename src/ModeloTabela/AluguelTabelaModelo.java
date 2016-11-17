@@ -30,8 +30,8 @@ public class AluguelTabelaModelo extends AbstractTableModel{
     public Object getValueAt(int linha, int coluna) {
         Aluguel aluguel = listaAluguel.get(linha);
        switch(coluna){
-           case 0: return aluguel.getClienteAluguel().getNome();
-           case 1: return aluguel.getClienteAluguel().getCpf();
+           case 0: return aluguel.getClienteAluguel().getCpf();
+           case 1: return aluguel.getHoraInicio();
            case 2: return aluguel.getStatus();
            case 3: return aluguel.getValorTotal();
         }
@@ -39,8 +39,8 @@ public class AluguelTabelaModelo extends AbstractTableModel{
     }
     public String getColumnName(int coluna) {
         switch(coluna){
-            case 0: return "Nome";
-            case 1: return "CPF";
+            case 0: return "CPF";
+            case 1: return "Hora Inicio";
             case 2: return "Status";
             case 3: return "Valor Total";
         }

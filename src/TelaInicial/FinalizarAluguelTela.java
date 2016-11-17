@@ -33,14 +33,15 @@ public class FinalizarAluguelTela extends javax.swing.JFrame {
     
     public void insereItemProduto() {
 
-        pesquisarCliente();
-
-        ItemDeProduto itemDeProduto = new ItemDeProduto();
-
         for (int i = 0; i < listaItensProdutos.size(); i++) {
+           
+            
+            ItemDeProduto itemDeProduto = new ItemDeProduto();
+            
             itemDeProduto.setHora(listaItensProdutos.get(i).getHora());
             itemDeProduto.setMinuto(listaItensProdutos.get(i).getMinuto());
             itemDeProduto.setQuantidade(listaItensProdutos.get(i).getQuantidade());
+            itemDeProduto.setStatus("Pendente");
             
             EntityManager entityManager = JPAUtil.getEntityManager();
             entityManager.getTransaction().begin();
@@ -57,26 +58,15 @@ public class FinalizarAluguelTela extends javax.swing.JFrame {
 
             entityManager.getTransaction().commit();
             entityManager.close();
-            JOptionPane.showMessageDialog(null, "Lista Finalizada!!!");
         }
+        JOptionPane.showMessageDialog(null, "Lista Finalizada!!!");
     }
     
-    public void pesquisarCliente() {
-
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        entityManager.getTransaction().begin();
-        DAOJPA<Cliente> dao = new DAOJPA<>(entityManager, Cliente.class);
-        clientes = dao.listarCPF(cliente.getCpf());
-        cliente = clientes.get(0);
-
-        entityManager.getTransaction().commit();
-        entityManager.close();
-
-    }
     
     public void limpaCampos(){
         campoNome.setText("");
         campoCPF.setText("");
+        listaItensProdutos.clear();
         
     }
  
@@ -210,6 +200,8 @@ public class FinalizarAluguelTela extends javax.swing.JFrame {
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
         preencheCliente();
         insereItemProduto();
+        limpaCampos();
+        this.dispose();
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
