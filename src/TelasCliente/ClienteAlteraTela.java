@@ -1,14 +1,14 @@
 package TelasCliente;
 
-import TelasFuncionario.*;
 import DAOJPA.DAOJPA;
 import Modelo.Cliente;
-import Modelo.Funcionario;
 import Modelo.SexoEnum;
 import Util.JPAUtil;
+import java.awt.Color;
 import javax.persistence.EntityManager;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 
 
 public class ClienteAlteraTela extends javax.swing.JFrame {
@@ -17,6 +17,12 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
     
     public ClienteAlteraTela() {
         initComponents();
+        //jLabelAst1.setForeground(Color.red);
+        //jLabelAst2.setForeground(Color.red);
+        //jLabelAst3.setForeground(Color.red);
+        //jLabelAst4.setForeground(Color.red);
+        //jLabelAst5.setForeground(Color.red);
+        //jLabelAst6.setForeground(Color.red);
     }
     public void setCliente(Cliente cliente){
         this.cliente = cliente;
@@ -25,6 +31,7 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
     public void setTelaConsulta(JFrame telaConsulta){
     this.telaConsulta=telaConsulta;
     }
+    
     public void preencheCampos(){
         campoNome.setText(cliente.getNome());
         campoCPF.setText(cliente.getCpf());
@@ -37,9 +44,10 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
         if(cliente.getSexo().toString().equals("M"))
             radioMasculino.setSelected(true);
         else
-            radioFemino.setSelected(true);
+            radioFeminino.setSelected(true);
     
     }
+    
     public void Atualizar(){
         EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
@@ -48,6 +56,7 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
         entityManager.close();
         JOptionPane.showMessageDialog(null, "Dados Atualizados");
     }
+    
     public void atualizaDados(){
         cliente.setNome(campoNome.getText());
         cliente.setCpf(campoCPF.getText());
@@ -83,7 +92,7 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
         campoNome = new javax.swing.JTextField();
         campoEndereco = new javax.swing.JTextField();
         radioMasculino = new javax.swing.JRadioButton();
-        radioFemino = new javax.swing.JRadioButton();
+        radioFeminino = new javax.swing.JRadioButton();
         campoCNH = new javax.swing.JTextField();
         campoEmail = new javax.swing.JTextField();
         botaoSalvar = new javax.swing.JButton();
@@ -103,22 +112,22 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
         jLabel46.setText("Alterar Cliente");
 
         jLabel47.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel47.setText("Nome");
+        jLabel47.setText("Nome *");
 
         jLabel48.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel48.setText("Telefone");
+        jLabel48.setText("Telefone *");
 
         jLabel49.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel49.setText("Endereço");
+        jLabel49.setText("Endereço *");
 
         jLabel50.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel50.setText("CPF");
+        jLabel50.setText("CPF *");
 
         jLabel51.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel51.setText("Email");
 
         jLabel52.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel52.setText("Sexo");
+        jLabel52.setText("Sexo *");
 
         jLabel53.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel53.setText("CNH");
@@ -126,8 +135,8 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
         buttonGroup1.add(radioMasculino);
         radioMasculino.setText("Masculino");
 
-        buttonGroup1.add(radioFemino);
-        radioFemino.setText("Feminino");
+        buttonGroup1.add(radioFeminino);
+        radioFeminino.setText("Feminino");
 
         botaoSalvar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         botaoSalvar.setText("Salvar");
@@ -146,7 +155,7 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
         });
 
         jLabel55.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel55.setText("Data de Nascimento");
+        jLabel55.setText("Data de Nascimento *");
 
         try {
             campoCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -181,14 +190,6 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
                 .addComponent(jLabel47)
                 .addGap(4, 4, 4)
                 .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(104, 104, 104)
-                .addComponent(jLabel52)
-                .addGap(4, 4, 4)
-                .addComponent(radioMasculino))
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(136, 136, 136)
-                .addComponent(radioFemino))
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(101, 101, 101)
                 .addComponent(jLabel51)
@@ -231,6 +232,13 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
                             .addComponent(jLabel49)
                             .addGap(4, 4, 4)
                             .addComponent(campoEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addComponent(jLabel52)
+                .addGap(4, 4, 4)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(radioFeminino)
+                    .addComponent(radioMasculino)))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,10 +250,8 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel47))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel47)
                     .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -272,7 +278,7 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
                         .addComponent(jLabel52))
                     .addComponent(radioMasculino))
                 .addGap(3, 3, 3)
-                .addComponent(radioFemino)
+                .addComponent(radioFeminino)
                 .addGap(2, 2, 2)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
@@ -312,10 +318,44 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-       atualizaDados();
-       Atualizar();
-       dispose();
-       telaConsulta.dispose();
+        boolean radioM = radioMasculino.isSelected();
+        boolean radioF = radioFeminino.isSelected();
+        
+        campoNome.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        campoCPF.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        campoDataNasc.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        campoEndereco.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        campoTelefone.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        
+        if(campoNome.getText().equals("")){
+            campoNome.setBorder(new LineBorder(Color.RED));
+            campoNome.requestFocus();
+            JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(campoCPF.getText().equals("   .   .   -  ")){
+                    campoCPF.setBorder(new LineBorder(Color.RED));
+                    campoCPF.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(campoDataNasc.getText().equals("  /  /    ")){
+                    campoDataNasc.setBorder(new LineBorder(Color.RED));
+                    campoDataNasc.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(campoEndereco.getText().equals("")){
+                    campoEndereco.setBorder(new LineBorder(Color.RED));
+                    campoEndereco.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(campoTelefone.getText().equals("(  )     -    ")){
+                    campoTelefone.setBorder(new LineBorder(Color.RED));
+                    campoTelefone.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(radioM == false && radioF == false){
+                    radioMasculino.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            atualizaDados();
+            Atualizar();
+            dispose();
+            telaConsulta.dispose();
+        }
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     /**
@@ -377,7 +417,7 @@ public class ClienteAlteraTela extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
-    private javax.swing.JRadioButton radioFemino;
+    private javax.swing.JRadioButton radioFeminino;
     private javax.swing.JRadioButton radioMasculino;
     // End of variables declaration//GEN-END:variables
 }
