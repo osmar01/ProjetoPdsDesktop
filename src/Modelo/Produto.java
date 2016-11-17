@@ -25,7 +25,7 @@ public class Produto {
     @Column(nullable = false, length = 100)
     private String descricao;
     
-    @Column(nullable = false)
+    @Column
     private String caminho;
     
     @ManyToOne(cascade = CascadeType.PERSIST)
