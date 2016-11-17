@@ -310,6 +310,8 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
         campoNome.setBorder(new LineBorder(Color.LIGHT_GRAY));
         campoPreco.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        spinnerQtde.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        campoDescricao.setBorder(new LineBorder(Color.LIGHT_GRAY));
         comboboxCategoria.setBorder(new LineBorder(Color.LIGHT_GRAY));
         
         if(campoNome.getText().equals("")){
@@ -319,6 +321,14 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         }else if(campoPreco.getText().equals("")){
                     campoPreco.setBorder(new LineBorder(Color.RED));
                     campoPreco.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(spinnerQtde.getValue().equals(0)){
+                    spinnerQtde.setBorder(new LineBorder(Color.RED));
+                    spinnerQtde.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(campoDescricao.getText().equals("")){
+                    campoDescricao.setBorder(new LineBorder(Color.RED));
+                    campoDescricao.requestFocus();
                     JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
         }else if(comboboxCategoria.getSelectedIndex() == 0){
                     comboboxCategoria.setBorder(new LineBorder(Color.RED));
