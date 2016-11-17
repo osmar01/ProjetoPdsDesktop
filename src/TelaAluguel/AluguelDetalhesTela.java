@@ -97,7 +97,7 @@ public class AluguelDetalhesTela extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(246, 253, 253));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setText("Gerenciar Alugueis");
+        jLabel1.setText("Alterar itens da Lista");
 
         tabelaAluguel.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tabelaAluguel.setModel(new javax.swing.table.DefaultTableModel(

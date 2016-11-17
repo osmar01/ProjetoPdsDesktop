@@ -23,6 +23,8 @@ public class ItemDeProduto {
     
     private double total;
     
+    private String status;
+    
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Produto produtoItem;
     
@@ -106,6 +108,15 @@ public class ItemDeProduto {
     public void setCliente(Cliente cliente) {
         this.clientesItem = cliente;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     
     
 }

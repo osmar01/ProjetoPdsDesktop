@@ -48,4 +48,9 @@ public class DAOJPA<Tipo> {
         return consulta.getResultList();
     }
     
+    public List<Tipo> listarStatus(String status){
+        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.status = '"+status+"'"); 
+        return consulta.getResultList();
+    }
+    
 }

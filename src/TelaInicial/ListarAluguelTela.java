@@ -1,64 +1,54 @@
 
-package TelaAluguel;
+package TelaInicial;
 
+import TelaAluguel.*;
 import TelasFuncionario.*;
 import DAOJPA.DAOJPA;
 import Modelo.Aluguel;
 import Modelo.Cliente;
 import Modelo.Funcionario;
+import Modelo.ItemDeProduto;
 import ModeloTabela.AluguelTabelaModelo;
 import ModeloTabela.FuncionarioTabelaModelo;
+import ModeloTabela.ItemDeProdutoTabelaModelo;
 import Util.JPAUtil;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 
 
-public class AluguelDevolucaoTela extends javax.swing.JFrame {
-    private List<Aluguel> listaAluguel = new ArrayList<>();
+public class ListarAluguelTela extends javax.swing.JFrame {
+    private List<ItemDeProduto> listaProdutos = new ArrayList<>();
     
     private Aluguel aluguel = new Aluguel();
     private Aluguel aluguelSelecionado = new Aluguel();
    
-    public AluguelDevolucaoTela() {
+    public ListarAluguelTela() {
         initComponents();
         Pesquisar();
     }
     
-    public void preencherFiltro(){
-        Cliente cliente = new Cliente();
-       // cliente.setNome(campoNome.getText());
-        aluguel.setClienteAluguel(cliente);
+    public void setListaProdutos(List<ItemDeProduto> listaProdutos){
+        this.listaProdutos = listaProdutos;
     }
-   
-    public void pesquisarBD(){
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        entityManager.getTransaction().begin();
-        DAOJPA<Aluguel> dao = new DAOJPA<>(entityManager,Aluguel.class);
-        listaAluguel = dao.listar(aluguel.getClienteAluguel().getNome());
-        entityManager.getTransaction().commit();
-        entityManager.close();
-    }
-    
+
     public void preencherTabela(){
-        AluguelTabelaModelo modelo = new AluguelTabelaModelo(listaAluguel);
-        tabelaAluguel.setModel(modelo);
+        ItemDeProdutoTabelaModelo modelo = new ItemDeProdutoTabelaModelo(listaProdutos);
+        tabelaListaProdutos.setModel(modelo);
     }
     
     public void Pesquisar(){
-        preencherFiltro();
-        pesquisarBD();
         preencherTabela();
     }
     //--------------------------metodos abaixo para consultar funcionario------------------------------------------
     public Aluguel aluguelSelecionado(){
-        aluguelSelecionado = listaAluguel.get(tabelaAluguel.getSelectedRow());
+        //aluguelSelecionado = listaProdutos.get(tabelaListaProdutos.getSelectedRow());
         return aluguelSelecionado;
     }
     public void selecionarLinhaTabela(java.awt.event.MouseEvent evt){
-        tabelaAluguel.clearSelection();
-        int linha = tabelaAluguel.rowAtPoint(evt.getPoint());
-        tabelaAluguel.setRowSelectionInterval(linha, linha);
+        tabelaListaProdutos.clearSelection();
+        int linha = tabelaListaProdutos.rowAtPoint(evt.getPoint());
+        tabelaListaProdutos.setRowSelectionInterval(linha, linha);
     }
     
     public void abrirTelaConsulta(){
@@ -77,7 +67,8 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaAluguel = new javax.swing.JTable();
+        tabelaListaProdutos = new javax.swing.JTable();
+        botaoCadastrar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
         botaoCadastrar3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -96,23 +87,31 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(246, 253, 253));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setText("Devolução de Alugueis");
+        jLabel1.setText("Lista de Alugueis");
 
-        tabelaAluguel.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        tabelaAluguel.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaListaProdutos.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        tabelaListaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome do Produto", "Hora Inicio", "Valor do Produto", "Atrasos", "Condição"
+                "Nome do Produto", "Categoria", "Quantidade", "Valor"
             }
         ));
-        tabelaAluguel.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelaListaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tabelaAluguelMouseReleased(evt);
+                tabelaListaProdutosMouseReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(tabelaAluguel);
+        jScrollPane1.setViewportView(tabelaListaProdutos);
+
+        botaoCadastrar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        botaoCadastrar.setText("Remover");
+        botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCadastrarActionPerformed(evt);
+            }
+        });
 
         botaoCancelar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         botaoCancelar.setText("Cancelar");
@@ -123,7 +122,7 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         });
 
         botaoCadastrar3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        botaoCadastrar3.setText("Finalizar");
+        botaoCadastrar3.setText("Alterar");
         botaoCadastrar3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCadastrar3ActionPerformed(evt);
@@ -148,24 +147,21 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(118, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoCadastrar3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))))
-                .addGap(38, 38, 38))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoCadastrar3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))))))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,16 +174,19 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(botaoCadastrar)
+                        .addGap(11, 11, 11)
+                        .addComponent(botaoCadastrar3)
+                        .addGap(51, 51, 51)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCadastrar3)))
-                .addGap(18, 18, 18)
-                .addComponent(botaoCancelar)
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(jLabel3)
+                        .addGap(27, 27, 27)
+                        .addComponent(botaoCancelar)
+                        .addGap(0, 83, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -198,7 +197,9 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -209,17 +210,22 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
+    private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
+        FuncionarioCadastraTela cadastraTela = new FuncionarioCadastraTela();
+        cadastraTela.setVisible(true);
+    }//GEN-LAST:event_botaoCadastrarActionPerformed
+
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
         Pesquisar();
     }//GEN-LAST:event_formWindowGainedFocus
 
-    private void tabelaAluguelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAluguelMouseReleased
+    private void tabelaListaProdutosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaListaProdutosMouseReleased
         aluguelSelecionado();
         selecionarLinhaTabela(evt);
         if(evt.getClickCount() > 1){
             abrirTelaConsulta();
         }
-    }//GEN-LAST:event_tabelaAluguelMouseReleased
+    }//GEN-LAST:event_tabelaListaProdutosMouseReleased
 
     private void botaoCadastrar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar3ActionPerformed
         // TODO add your handling code here:
@@ -242,13 +248,13 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AluguelDevolucaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListarAluguelTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AluguelDevolucaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListarAluguelTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AluguelDevolucaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListarAluguelTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AluguelDevolucaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListarAluguelTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -262,12 +268,13 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AluguelDevolucaoTela().setVisible(true);
+                new ListarAluguelTela().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoCadastrar3;
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JLabel jLabel1;
@@ -277,6 +284,6 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable tabelaAluguel;
+    private javax.swing.JTable tabelaListaProdutos;
     // End of variables declaration//GEN-END:variables
 }
