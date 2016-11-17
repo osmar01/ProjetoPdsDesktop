@@ -4,16 +4,27 @@ import DAOJPA.DAOJPA;
 import Modelo.Funcionario;
 import Modelo.SexoEnum;
 import Util.JPAUtil;
+import java.awt.Color;
 import javax.persistence.EntityManager;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 
 
 public class FuncionarioAlteraTela extends javax.swing.JFrame {
     private Funcionario fun;
     private JFrame telaConsulta;
+    
     public FuncionarioAlteraTela() {
         initComponents();
+        jLabelAst1.setForeground(Color.red);
+        jLabelAst2.setForeground(Color.red);
+        jLabelAst3.setForeground(Color.red);
+        jLabelAst4.setForeground(Color.red);
+        jLabelAst5.setForeground(Color.red);
+        jLabelAst6.setForeground(Color.red);
+        jLabelAst7.setForeground(Color.red);
+        jLabelAst8.setForeground(Color.red);
     }
     public void setFuncionario(Funcionario fun){
         this.fun = fun;
@@ -35,7 +46,7 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
         if(fun.getSexo().toString().equals("M"))
             radioMasculino.setSelected(true);
         else
-            radioFemino.setSelected(true);
+            radioFeminino.setSelected(true);
     
     }
     public void Atualizar(){
@@ -83,7 +94,7 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
         campoNome = new javax.swing.JTextField();
         campoEndereco = new javax.swing.JTextField();
         radioMasculino = new javax.swing.JRadioButton();
-        radioFemino = new javax.swing.JRadioButton();
+        radioFeminino = new javax.swing.JRadioButton();
         campoSenha = new javax.swing.JTextField();
         campoEmail = new javax.swing.JTextField();
         campoLogin = new javax.swing.JTextField();
@@ -93,6 +104,14 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
         campoCPF = new javax.swing.JFormattedTextField();
         campoDataNasc = new javax.swing.JFormattedTextField();
         campoTelefone = new javax.swing.JFormattedTextField();
+        jLabelAst3 = new javax.swing.JLabel();
+        jLabelAst2 = new javax.swing.JLabel();
+        jLabelAst1 = new javax.swing.JLabel();
+        jLabelAst4 = new javax.swing.JLabel();
+        jLabelAst5 = new javax.swing.JLabel();
+        jLabelAst6 = new javax.swing.JLabel();
+        jLabelAst7 = new javax.swing.JLabel();
+        jLabelAst8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alterar Funcionario");
@@ -127,11 +146,17 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
         jLabel54.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel54.setText("Login");
 
+        campoNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoNomeActionPerformed(evt);
+            }
+        });
+
         buttonGroup1.add(radioMasculino);
         radioMasculino.setText("Masculino");
 
-        buttonGroup1.add(radioFemino);
-        radioFemino.setText("Feminino");
+        buttonGroup1.add(radioFeminino);
+        radioFeminino.setText("Feminino");
 
         botaoSalvar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         botaoSalvar.setText("Salvar");
@@ -170,6 +195,22 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        jLabelAst3.setText("*");
+
+        jLabelAst2.setText("*");
+
+        jLabelAst1.setText("*");
+
+        jLabelAst4.setText("*");
+
+        jLabelAst5.setText("*");
+
+        jLabelAst6.setText("*");
+
+        jLabelAst7.setText("*");
+
+        jLabelAst8.setText("*");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -183,61 +224,77 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                    .addGap(21, 21, 21)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGap(4, 4, 4)
-                            .addComponent(jLabel48)
+                            .addComponent(jLabel55)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(campoTelefone))
+                            .addComponent(jLabelAst3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(campoDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addComponent(jLabel52)
-                            .addGap(4, 4, 4)
-                            .addComponent(radioMasculino))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel47)
+                                .addComponent(jLabel50))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addComponent(jLabelAst1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addComponent(jLabelAst2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGap(20, 20, 20))
+                .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGap(57, 57, 57)
-                            .addComponent(radioFemino))
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGap(22, 22, 22)
-                            .addComponent(jLabel51)
-                            .addGap(4, 4, 4)
-                            .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGap(21, 21, 21)
-                            .addComponent(jLabel54)
-                            .addGap(4, 4, 4)
-                            .addComponent(campoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGap(19, 19, 19)
-                            .addComponent(jLabel53)
-                            .addGap(4, 4, 4)
-                            .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGap(17, 17, 17)
+                            .addGap(38, 38, 38)
                             .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(40, 40, 40)
                             .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addComponent(jLabel49)
-                            .addGap(4, 4, 4)
-                            .addComponent(campoEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addComponent(jLabel47)
-                            .addGap(4, 4, 4)
-                            .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGap(9, 9, 9)
-                            .addComponent(jLabel50)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                            .addGap(80, 80, 80)
+                                            .addComponent(jLabel49, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel51)
+                                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jLabel48, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jLabel52, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabelAst6)
+                                        .addComponent(jLabelAst4)
+                                        .addComponent(jLabelAst5)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel53)
+                                        .addComponent(jLabel54))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabelAst7)
+                                        .addComponent(jLabelAst8))))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(campoCPF)))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel55)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(campoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(radioMasculino)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(campoEndereco)
+                                    .addComponent(campoTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
+                                .addComponent(radioFeminino))))
+                    .addContainerGap()))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,55 +306,51 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel47))
-                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel47)
+                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelAst1))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel50)
-                    .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelAst2))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel55)
-                    .addComponent(campoDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelAst3))
                 .addGap(11, 11, 11)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel49))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel49)
+                    .addComponent(jLabelAst4)
                     .addComponent(campoEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel48)
-                    .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelAst5))
                 .addGap(9, 9, 9)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel52))
-                    .addComponent(radioMasculino))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel52)
+                    .addComponent(radioMasculino)
+                    .addComponent(jLabelAst6))
                 .addGap(3, 3, 3)
-                .addComponent(radioFemino)
-                .addGap(2, 2, 2)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel51))
-                    .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(radioFeminino)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel51))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel54)
+                    .addComponent(campoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelAst7))
                 .addGap(11, 11, 11)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel54))
-                    .addComponent(campoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel53))
-                    .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel53)
+                    .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelAst8))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoSalvar)
@@ -325,11 +378,59 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-       atualizaDados();
-       Atualizar();
-       dispose();
-       telaConsulta.dispose();
+        boolean radioM = radioMasculino.isSelected();
+        boolean radioF = radioFeminino.isSelected();
+        
+        campoNome.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        campoCPF.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        campoDataNasc.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        campoEndereco.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        campoTelefone.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        campoLogin.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        campoSenha.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        
+        if(campoNome.getText().equals("")){
+            campoNome.setBorder(new LineBorder(Color.RED));
+            campoNome.requestFocus();
+            JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(campoCPF.getText().equals("   .   .   -  ")){
+                    campoCPF.setBorder(new LineBorder(Color.RED));
+                    campoCPF.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(campoDataNasc.getText().equals("  /  /    ")){
+                    campoDataNasc.setBorder(new LineBorder(Color.RED));
+                    campoDataNasc.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(campoEndereco.getText().equals("")){
+                    campoEndereco.setBorder(new LineBorder(Color.RED));
+                    campoEndereco.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(campoTelefone.getText().equals("(  )     -    ")){
+                    campoTelefone.setBorder(new LineBorder(Color.RED));
+                    campoTelefone.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(radioM == false && radioF == false){
+                    radioMasculino.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(campoLogin.getText().equals("")){
+                    campoLogin.setBorder(new LineBorder(Color.RED));
+                    campoLogin.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else if(campoSenha.getText().equals("")){
+                    campoSenha.setBorder(new LineBorder(Color.RED));
+                    campoSenha.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Por favor, preencha os campos obrigatórios!!!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            atualizaDados();
+            Atualizar();
+            dispose();
+            telaConsulta.dispose();
+        }
     }//GEN-LAST:event_botaoSalvarActionPerformed
+
+    private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoNomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -388,10 +489,18 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabelAst1;
+    private javax.swing.JLabel jLabelAst2;
+    private javax.swing.JLabel jLabelAst3;
+    private javax.swing.JLabel jLabelAst4;
+    private javax.swing.JLabel jLabelAst5;
+    private javax.swing.JLabel jLabelAst6;
+    private javax.swing.JLabel jLabelAst7;
+    private javax.swing.JLabel jLabelAst8;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
-    private javax.swing.JRadioButton radioFemino;
+    private javax.swing.JRadioButton radioFeminino;
     private javax.swing.JRadioButton radioMasculino;
     // End of variables declaration//GEN-END:variables
 }
