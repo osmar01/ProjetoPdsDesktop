@@ -271,17 +271,17 @@ public class TelaInicial extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Produto", "Preço"
+                "Produto", "Preço", "Quantidade"
             }
         ));
-        tabelaProduto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                tabelaProdutoFocusGained(evt);
-            }
-        });
         tabelaProduto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tabelaProdutoMouseReleased(evt);
+            }
+        });
+        tabelaProduto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tabelaProdutoFocusGained(evt);
             }
         });
         jScrollPane1.setViewportView(tabelaProduto);

@@ -1,6 +1,7 @@
 
 package Modelo;
 
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +31,8 @@ public class Aluguel {
     private String horaFim;
     
     private Double valorTotal;
+    
+    private Date dataAluguel;
     
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Funcionario funcionario;
@@ -105,6 +108,14 @@ public class Aluguel {
 
     public void setClienteAluguel(Cliente clienteAluguel) {
         this.clienteAluguel = clienteAluguel;
+    }
+
+    public Date getDataAluguel() {
+        return dataAluguel;
+    }
+
+    public void setDataAluguel(Date dataAluguel) {
+        this.dataAluguel = dataAluguel;
     }
     
     
