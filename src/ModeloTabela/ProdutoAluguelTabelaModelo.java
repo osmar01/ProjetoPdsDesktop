@@ -19,15 +19,16 @@ public class ProdutoAluguelTabelaModelo extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 2;
+        return 3;
     }
 
     @Override
     public Object getValueAt(int linha, int coluna) {
-       Produto cat = listaProduto.get(linha);
+       Produto produto = listaProduto.get(linha);
        switch(coluna){
-           case 0: return cat.getNome();
-           case 1: return cat.getPreco().toString();
+           case 0: return produto.getNome();
+           case 1: return produto.getPreco().toString();
+           case 2: return produto.getQuantidade();
         }
         return null;
     }
@@ -35,6 +36,7 @@ public class ProdutoAluguelTabelaModelo extends AbstractTableModel{
         switch(coluna){
             case 0: return "Produto";
             case 1: return "Preço";
+            case 2: return "Quantidade";
         }
         return null;
     }

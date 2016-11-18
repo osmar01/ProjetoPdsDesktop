@@ -81,8 +81,11 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         em.getTransaction().begin();
         
         Date date = new Date();
-        DateFormat formato = new SimpleDateFormat("HH:mm:ss.SSS");
+        DateFormat formato = new SimpleDateFormat("HH:mm");
         String formattedDate = formato.format(date);
+        
+        Date data = new Date();
+        DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
         
         Aluguel aluguel = new Aluguel();
         
@@ -95,6 +98,8 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         aluguel.setClienteAluguel(cliente);
         aluguel.setHoraInicio(formattedDate);
         aluguel.setStatus("Em Andamento");
+        aluguel.setDataAluguel(data);
+        
         DAOJPA<Aluguel> dao = new DAOJPA<>(em,Aluguel.class);
         
         dao.Inserir(aluguel);
@@ -148,6 +153,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         botaoCadastrar4 = new javax.swing.JButton();
         botaoCadastrar5 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
+        botaoAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisar Funcionario");
@@ -162,7 +168,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(246, 253, 253));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setText("Cadastrar Alugueis");
+        jLabel1.setText("Manter Alugueis");
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel2.setText("CPF");
@@ -260,6 +266,14 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
             }
         });
 
+        botaoAtualizar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        botaoAtualizar.setText("Atualizar");
+        botaoAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAtualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -296,7 +310,8 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
                                     .addComponent(botaoCadastrar4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(botaoCadastrar5, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                                     .addComponent(botaoCadastrar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(botaoIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(botaoIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(botaoAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -329,7 +344,9 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botaoCadastrar3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botaoCadastrar5)))
+                        .addComponent(botaoCadastrar5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(botaoAtualizar)))
                 .addGap(32, 32, 32)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -401,12 +418,18 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCadastrar3ActionPerformed
 
     private void botaoCadastrar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar4ActionPerformed
-        // TODO add your handling code here:
+        AluguelDevolucaoTela aluguelDevolucaoTela = new AluguelDevolucaoTela();
+        aluguelDevolucaoTela.setVisible(true);
     }//GEN-LAST:event_botaoCadastrar4ActionPerformed
 
     private void botaoCadastrar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoCadastrar5ActionPerformed
+
+    private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
+        AtualizarReserva();
+        AtualizarAluguel();
+    }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -445,6 +468,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAtualizar;
     private javax.swing.JButton botaoCadastrar1;
     private javax.swing.JButton botaoCadastrar3;
     private javax.swing.JButton botaoCadastrar4;

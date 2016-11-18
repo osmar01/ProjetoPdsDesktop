@@ -22,7 +22,7 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
    
     public AluguelDevolucaoTela() {
         initComponents();
-        Pesquisar();
+        //Pesquisar();
     }
     
     public void preencherFiltro(){
