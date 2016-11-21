@@ -26,9 +26,9 @@ public class Aluguel {
     @Column(nullable = false, length = 100)
     private String status;
     
-    private String horaInicio;
+    private Date horaInicio;
     
-    private String horaFim;
+    private Date horaFim;
     
     private Double valorTotal;
     
@@ -62,19 +62,19 @@ public class Aluguel {
         this.status = status;
     }
 
-    public String getHoraInicio() {
+    public Date getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(String horaInicio) {
+    public void setHoraInicio(Date horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public String getHoraFim() {
+    public Date getHoraFim() {
         return horaFim;
     }
 
-    public void setHoraFim(String horaFim) {
+    public void setHoraFim(Date horaFim) {
         this.horaFim = horaFim;
     }
 

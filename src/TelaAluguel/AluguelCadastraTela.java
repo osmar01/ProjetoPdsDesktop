@@ -96,7 +96,8 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         em.merge(itemDeProdutoSelecionado);
         
         aluguel.setClienteAluguel(cliente);
-        aluguel.setHoraInicio(formattedDate);
+        aluguel.setHoraInicio(date);
+        JOptionPane.showMessageDialog(null, date,"Aviso", JOptionPane.INFORMATION_MESSAGE);
         aluguel.setStatus("Em Andamento");
         aluguel.setDataAluguel(data);
         

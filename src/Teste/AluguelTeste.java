@@ -1,4 +1,3 @@
-
 package Teste;
 
 import DAOJPA.DAOJPA;
@@ -14,8 +13,8 @@ public class AluguelTeste {
      public void lerDados(){
         EntityManager em = JPAUtil.getEntityManager();
         Aluguel aluguel = new Aluguel();
-        aluguel.setHoraFim("4H");
-        aluguel.setHoraInicio("2H");
+        //aluguel.setHoraFim("4H");
+        //aluguel.setHoraInicio("2H");
         
         Funcionario funcionario = em.find(Funcionario.class, 1L);
         aluguel.setFuncionario(funcionario);
