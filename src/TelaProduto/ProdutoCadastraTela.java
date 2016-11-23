@@ -10,7 +10,10 @@ import Util.JPAUtil;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -19,7 +22,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ProdutoCadastraTela extends javax.swing.JFrame {
-    public String caminho;
+    public String nomeImagem;
   
     public ProdutoCadastraTela() {
         initComponents();
@@ -57,7 +60,7 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         produto.setNome(campoNome.getText());
         produto.setPreco(Double.parseDouble(campoPreco.getText()));
         produto.setDescricao(campoDescricao.getText());
-        produto.setCaminho(caminho);
+        produto.setCaminho(nomeImagem);
         produto.setQuantidade(Integer.parseInt(spinnerQtde.getValue().toString()));
                
         //---------------
@@ -355,10 +358,13 @@ public class ProdutoCadastraTela extends javax.swing.JFrame {
         
         if(op == JFileChooser.APPROVE_OPTION){
             File file = arquivo.getSelectedFile();
-            caminho = file.getAbsolutePath();
+            //caminho = file.getAbsolutePath();
+            nomeImagem = file.getName();
             
-            ImageIcon img = new ImageIcon(arquivo.getSelectedFile().getPath());
+            ImageIcon img = new ImageIcon(file.getPath());
             campoImagem.setIcon(new ImageIcon(img.getImage().getScaledInstance(campoImagem.getWidth(), campoImagem.getHeight(), Image.SCALE_DEFAULT)));
+        }else{
+            JOptionPane.showMessageDialog(null, "Nenhuma imagem selecionada!","Aviso", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_botaoAddImagemActionPerformed
 

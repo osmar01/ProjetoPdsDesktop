@@ -6,6 +6,10 @@ import Modelo.Funcionario;
 import Modelo.Produto;
 import Util.JPAUtil;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -28,7 +32,10 @@ public class ProdutoConsultaTela extends javax.swing.JFrame {
         labelPreco.setText(produto.getPreco().toString());
         labelQtde.setText(Integer.toString(produto.getQuantidade()));
         
-        ImageIcon img = new ImageIcon(produto.getCaminho());
+        String dir = new File("").getAbsolutePath();
+        String caminho = dir + File.separator + "src" + File.separator + "Imagens" + File.separator + produto.getCaminho();
+        
+        ImageIcon img = new ImageIcon(caminho);
         labelImagem.setIcon(new ImageIcon(img.getImage().getScaledInstance(labelImagem.getWidth(), labelImagem.getHeight(), Image.SCALE_DEFAULT)));
     }
    public void excluir(){

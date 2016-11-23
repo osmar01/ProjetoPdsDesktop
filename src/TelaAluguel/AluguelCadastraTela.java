@@ -80,15 +80,14 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
         
-        Date date = new Date();
-        DateFormat formato = new SimpleDateFormat("HH:mm");
-        String formattedDate = formato.format(date);
+        //SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+        //Date date = new Date();
+        //String horaFormatada = formatoHora.format(date);
         
+        //DateFormat formatoData = new SimpleDateFormat("yyyy-MM-dd");
         Date data = new Date();
-        DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
         
         Aluguel aluguel = new Aluguel();
-        
         aluguelSelecionado();        
         Cliente cliente = em.find(Cliente.class,itemDeProdutoSelecionado.getCliente().getId());
         
@@ -96,8 +95,8 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         em.merge(itemDeProdutoSelecionado);
         
         aluguel.setClienteAluguel(cliente);
-        aluguel.setHoraInicio(date);
-        JOptionPane.showMessageDialog(null, date,"Aviso", JOptionPane.INFORMATION_MESSAGE);
+        aluguel.setHoraInicio(data);
+        JOptionPane.showMessageDialog(null, data,"Aviso", JOptionPane.INFORMATION_MESSAGE);
         aluguel.setStatus("Em Andamento");
         aluguel.setDataAluguel(data);
         
@@ -225,7 +224,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CPF", "Hora inicio", "Status"
+                "CPF", "Hora inicio", "Status", "Valor Total"
             }
         ));
         tabelaAluguel.addMouseListener(new java.awt.event.MouseAdapter() {
