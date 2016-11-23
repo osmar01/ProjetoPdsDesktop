@@ -53,4 +53,8 @@ public class DAOJPA<Tipo> {
         return consulta.getResultList();
     }
     
+    public List<Tipo> listarLogin(String login){
+        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.login = '"+login+"'"); 
+        return consulta.getResultList();
+    }
 }

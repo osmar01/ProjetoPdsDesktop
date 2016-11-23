@@ -3,6 +3,7 @@ package TelaInicial;
 import DAOJPA.DAOJPA;
 import Modelo.Categoria;
 import Modelo.Cliente;
+import Modelo.Funcionario;
 import Modelo.ItemDeProduto;
 import Modelo.Produto;
 import ModeloTabela.CategoriaTabelaModelo;
@@ -11,11 +12,13 @@ import TelaAluguel.AluguelCadastraTela;
 import TelaCategoria.CategoriaPesquisaTela;
 import TelaProduto.ProdutoPesquisaTela;
 import TelasCliente.ClientePesquisaTela;
+import TelasFuncionario.FuncionarioCadastraTela;
 import TelasFuncionario.FuncionarioPesquisaTela;
 import Util.JPAUtil;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.swing.JOptionPane;
 
 public class TelaInicial extends javax.swing.JFrame {
 
@@ -25,13 +28,13 @@ public class TelaInicial extends javax.swing.JFrame {
     private Categoria cat = new Categoria();
     private Categoria catSelecionada;
     private Cliente cliente = new Cliente();
-    
-
+    private Funcionario fun;
     private Produto produtoSelecionado;
 
     public TelaInicial() {
         initComponents();
         Pesquisar();
+        verificaAdm();
     }
 
     //----------------------- preencher TabelaCategoria----------------
@@ -104,8 +107,6 @@ public class TelaInicial extends javax.swing.JFrame {
     }
    //------------------------------INSERE ITEM DE PRODUTO ------------------------------
 
-    
-
     public void abrirTelaFinalizarAluguel() {
         FinalizarAluguelTela aluguelTela = new FinalizarAluguelTela();
         aluguelTela.setCliente(cliente);
@@ -119,6 +120,136 @@ public class TelaInicial extends javax.swing.JFrame {
         aluguelTela.setListaProdutos(listaItensProdutos);
         aluguelTela.setVisible(true);
     }
+    
+    //--------------------------------Login-------------------------------------------
+    
+    public void verificaLogin(){
+        
+        fun = consultaFuncionario();
+        
+        
+        if(campoLogin.getText().equals(fun.getLogin())){
+            if(campoSenha.getText().equals(fun.getSenha())){
+                if(fun.getTipo().equals("adm")){
+                    liberaCamposAdm();
+                    JOptionPane.showMessageDialog(null, "Bem Vindo Administrador");
+                    limpaCampos();
+                    botaoEntrar.setEnabled(false);
+                    botaoSair.setEnabled(true);
+                    bloqueiaCampos();
+                }
+                else{
+                    liberaCamposFun();
+                    JOptionPane.showMessageDialog(null, "Bem Vindo");
+                    limpaCampos();
+                    botaoEntrar.setEnabled(false);
+                    botaoSair.setEnabled(true);
+                    bloqueiaCampos();
+                }
+            }
+            else{
+            JOptionPane.showMessageDialog(null, "Senha incorreta!");
+            campoSenha.setText("");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Login Incorreto!!!");
+            
+        }
+    
+    }
+    
+    public void liberaCamposAdm(){
+        menuCadastros.setEnabled(true);
+        menuItemFuncionario.setEnabled(true);
+        menuItemProduto.setEnabled(true);
+        menuItemCategoria.setEnabled(true);
+        menuMovimentacoes.setEnabled(true);
+        menuRelatorio.setEnabled(true);
+        menuSobre.setEnabled(true);
+    }
+    
+    public void liberaCamposFun(){
+        menuCadastros.setEnabled(true);
+        menuMovimentacoes.setEnabled(true);
+        menuRelatorio.setEnabled(true);
+        menuSobre.setEnabled(true);
+    }
+    
+    public void sairLogin(){
+        bloqueiaMenus();
+    
+    }
+    
+    public void bloqueiaMenus(){
+        menuCadastros.setEnabled(false);
+        menuItemFuncionario.setEnabled(false);
+        menuItemProduto.setEnabled(false);
+        menuItemCategoria.setEnabled(false);
+        menuMovimentacoes.setEnabled(false);
+        menuRelatorio.setEnabled(false);
+        menuSobre.setEnabled(false);
+        JOptionPane.showMessageDialog(null, "Login Encerrado!!!");
+    }
+    
+    public void limpaCampos(){
+        campoLogin.setText("");
+        campoSenha.setText("");
+    }
+    
+    public void bloqueiaCampos(){
+        campoLogin.setEnabled(false);
+        campoSenha.setEnabled(false);
+    }
+    
+    public void liberaCampos(){
+        campoLogin.setEnabled(true);
+        campoSenha.setEnabled(true);
+    }
+    
+    public Funcionario consultaFuncionario(){
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        entityManager.getTransaction().begin();
+        DAOJPA<Funcionario> dao = new DAOJPA<>(entityManager, Funcionario.class);
+        List<Funcionario> listaFuncionarios = dao.listarLogin(campoLogin.getText());
+        
+        Funcionario fun = listaFuncionarios.get(0);
+        
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        
+        return fun;
+    }
+    
+    //---------------------------------primeiro Cadastro de Administrador-------------------
+    
+    public void verificaAdm(){
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        entityManager.getTransaction().begin();
+        DAOJPA<Funcionario> dao = new DAOJPA<>(entityManager, Funcionario.class);
+        List<Funcionario> listaFuncionarios = dao.listar("");
+        boolean bol = true;
+        for (Funcionario e: listaFuncionarios){
+           if(e.getTipo().equals("adm")){
+               JOptionPane.showMessageDialog(null, "Aplicacao Iniciada com sucesso!");
+               bol=false;
+               break;
+           }
+           else{
+               bol=true;
+           }
+        }
+        if(bol){
+            JOptionPane.showMessageDialog(null, "A Aplicacao ainda nao tem administrador!\n"
+                       + "È necessario Cadastar");
+               FuncionarioCadastraTela cadastraTela  = new FuncionarioCadastraTela();
+               cadastraTela.setVisible(true);
+        }
+        
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -129,10 +260,11 @@ public class TelaInicial extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        campoLogin = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        campoSenha = new javax.swing.JPasswordField();
+        botaoEntrar = new javax.swing.JButton();
+        botaoSair = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -145,15 +277,15 @@ public class TelaInicial extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        MenuItemProduto = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu7 = new javax.swing.JMenu();
+        menuCadastros = new javax.swing.JMenu();
+        menuItemCliente = new javax.swing.JMenuItem();
+        menuItemFuncionario = new javax.swing.JMenuItem();
+        menuItemProduto = new javax.swing.JMenuItem();
+        menuItemCategoria = new javax.swing.JMenuItem();
+        menuMovimentacoes = new javax.swing.JMenu();
+        menuItemAluguel = new javax.swing.JMenuItem();
+        menuRelatorio = new javax.swing.JMenu();
+        menuSobre = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AMAZONIA");
@@ -189,8 +321,22 @@ public class TelaInicial extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel4.setText("Senha");
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButton1.setText("Entrar");
+        botaoEntrar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        botaoEntrar.setText("Entrar");
+        botaoEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEntrarActionPerformed(evt);
+            }
+        });
+
+        botaoSair.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        botaoSair.setText("Sair");
+        botaoSair.setEnabled(false);
+        botaoSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -199,15 +345,18 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addComponent(jLabel4)))
+                        .addComponent(botaoEntrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,10 +366,11 @@ public class TelaInicial extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(campoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoEntrar)
+                    .addComponent(botaoSair))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Panoramica-Praia-Do-Sono_1.jpg"))); // NOI18N
@@ -350,20 +500,22 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel6))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 1057, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 52, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 1057, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 52, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -379,7 +531,7 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addContainerGap())
         );
@@ -388,67 +540,74 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenuBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jMenuBar1.setFont(new java.awt.Font("Tunga", 1, 12)); // NOI18N
 
-        jMenu1.setBorder(null);
-        jMenu1.setText("Cadastros");
-        jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        menuCadastros.setBorder(null);
+        menuCadastros.setText("Cadastros");
+        menuCadastros.setEnabled(false);
+        menuCadastros.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
-        jMenuItem1.setText("Cliente");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCliente.setText("Cliente");
+        menuItemCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuItemClienteActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        menuCadastros.add(menuItemCliente);
 
-        jMenuItem2.setText("Funcionario");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuItemFuncionario.setText("Funcionario");
+        menuItemFuncionario.setEnabled(false);
+        menuItemFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuItemFuncionarioActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        menuCadastros.add(menuItemFuncionario);
 
-        MenuItemProduto.setText("Produto");
-        MenuItemProduto.addActionListener(new java.awt.event.ActionListener() {
+        menuItemProduto.setText("Produto");
+        menuItemProduto.setEnabled(false);
+        menuItemProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuItemProdutoActionPerformed(evt);
+                menuItemProdutoActionPerformed(evt);
             }
         });
-        jMenu1.add(MenuItemProduto);
+        menuCadastros.add(menuItemProduto);
 
-        jMenuItem4.setText("Categoria");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCategoria.setText("Categoria");
+        menuItemCategoria.setEnabled(false);
+        menuItemCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                menuItemCategoriaActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
+        menuCadastros.add(menuItemCategoria);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuCadastros);
 
-        jMenu2.setBorder(null);
-        jMenu2.setText("Movimentacoes");
-        jMenu2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        menuMovimentacoes.setBorder(null);
+        menuMovimentacoes.setText("Movimentacoes");
+        menuMovimentacoes.setEnabled(false);
+        menuMovimentacoes.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
-        jMenuItem5.setText("Alugueis");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        menuItemAluguel.setText("Alugueis");
+        menuItemAluguel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                menuItemAluguelActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        menuMovimentacoes.add(menuItemAluguel);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menuMovimentacoes);
 
-        jMenu3.setBorder(null);
-        jMenu3.setText("Relatórios");
-        jMenu3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jMenuBar1.add(jMenu3);
+        menuRelatorio.setBorder(null);
+        menuRelatorio.setText("Relatórios");
+        menuRelatorio.setEnabled(false);
+        menuRelatorio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jMenuBar1.add(menuRelatorio);
 
-        jMenu7.setBorder(null);
-        jMenu7.setText("Sobre");
-        jMenu7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jMenuBar1.add(jMenu7);
+        menuSobre.setBorder(null);
+        menuSobre.setText("Sobre");
+        menuSobre.setEnabled(false);
+        menuSobre.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jMenuBar1.add(menuSobre);
 
         setJMenuBar(jMenuBar1);
 
@@ -467,25 +626,25 @@ public class TelaInicial extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void menuItemFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFuncionarioActionPerformed
         FuncionarioPesquisaTela funcionarioPesquisaTela = new FuncionarioPesquisaTela();
         funcionarioPesquisaTela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menuItemFuncionarioActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemClienteActionPerformed
         ClientePesquisaTela clientePesquisaTela = new ClientePesquisaTela();
         clientePesquisaTela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuItemClienteActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void menuItemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCategoriaActionPerformed
         CategoriaPesquisaTela categoriaPesquisaTela = new CategoriaPesquisaTela();
         categoriaPesquisaTela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_menuItemCategoriaActionPerformed
 
-    private void MenuItemProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemProdutoActionPerformed
+    private void menuItemProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemProdutoActionPerformed
         ProdutoPesquisaTela produtoPesquisaTela = new ProdutoPesquisaTela();
         produtoPesquisaTela.setVisible(true);
-    }//GEN-LAST:event_MenuItemProdutoActionPerformed
+    }//GEN-LAST:event_menuItemProdutoActionPerformed
 
     private void tabelaCategoriasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCategoriasMouseReleased
         categoriaSelecionada();
@@ -521,14 +680,25 @@ public class TelaInicial extends javax.swing.JFrame {
         abrirTelaFinalizarAluguel();
     }//GEN-LAST:event_botaoFinalizarListaActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void menuItemAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAluguelActionPerformed
         AluguelCadastraTela aluguelCadastraTela = new AluguelCadastraTela();
         aluguelCadastraTela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_menuItemAluguelActionPerformed
 
     private void botaoListaProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListaProdutoActionPerformed
         abrirTelaListarProduto();
     }//GEN-LAST:event_botaoListaProdutoActionPerformed
+
+    private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
+        verificaLogin();
+    }//GEN-LAST:event_botaoEntrarActionPerformed
+
+    private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
+        bloqueiaMenus();
+        botaoEntrar.setEnabled(true);
+        botaoSair.setEnabled(false);
+        liberaCampos();
+    }//GEN-LAST:event_botaoSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -566,10 +736,12 @@ public class TelaInicial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem MenuItemProduto;
+    private javax.swing.JButton botaoEntrar;
     private javax.swing.JButton botaoFinalizarLista;
     private javax.swing.JButton botaoListaProduto;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botaoSair;
+    private javax.swing.JTextField campoLogin;
+    private javax.swing.JPasswordField campoSenha;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -577,23 +749,22 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JMenu menuCadastros;
+    private javax.swing.JMenuItem menuItemAluguel;
+    private javax.swing.JMenuItem menuItemCategoria;
+    private javax.swing.JMenuItem menuItemCliente;
+    private javax.swing.JMenuItem menuItemFuncionario;
+    private javax.swing.JMenuItem menuItemProduto;
+    private javax.swing.JMenu menuMovimentacoes;
+    private javax.swing.JMenu menuRelatorio;
+    private javax.swing.JMenu menuSobre;
     private javax.swing.JTable tabelaCategorias;
     private javax.swing.JTable tabelaProduto;
     // End of variables declaration//GEN-END:variables

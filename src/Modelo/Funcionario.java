@@ -42,6 +42,9 @@ public class Funcionario {
     @Column(nullable = false, length = 100)
     private String senha;
     
+    @Column(nullable = false, unique = true)
+    private String tipo;
+    
     public Funcionario() {
     }
 
@@ -124,5 +127,15 @@ public class Funcionario {
     public void setDataNasc(String DataNasc) {
         this.DataNasc = DataNasc;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
+    
     
 }
