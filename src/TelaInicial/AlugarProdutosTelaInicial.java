@@ -1,17 +1,11 @@
 
 package TelaInicial;
 
-import Modelo.Cliente;
-import TelaProduto.*;
-import TelasFuncionario.*;
-import Modelo.Funcionario;
 import Modelo.ItemDeProduto;
 import Modelo.Produto;
-import Util.JPAUtil;
 import java.awt.Image;
 import java.io.File;
 import java.util.List;
-import javax.persistence.EntityManager;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -50,7 +44,7 @@ public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
     public void inserirItem(){
         ItemDeProduto itemDeProduto = new ItemDeProduto();
         
-        itemDeProduto.setHora(Integer.parseInt(spinnerHora.getValue().toString()));
+        //itemDeProduto.setHora(Integer.parseInt(spinnerHora.getValue().toString()));
         itemDeProduto.setMinuto(Integer.parseInt(spinnerMinuto.getValue().toString()));
         itemDeProduto.setQuantidade(Integer.parseInt(spinnerQtde.getValue().toString()));
         itemDeProduto.setProduto(produto);

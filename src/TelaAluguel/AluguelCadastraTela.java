@@ -21,10 +21,12 @@ import javax.swing.JOptionPane;
 
 
 public class AluguelCadastraTela extends javax.swing.JFrame {
-    private List<ItemDeProduto> listaReservas = new ArrayList<>();
+    private List<Aluguel> listaReservas = new ArrayList<>();
     private List<Aluguel> listaAlugueis = new ArrayList<>();
     
-    private ItemDeProduto itemDeProdutoSelecionado = new ItemDeProduto();
+    private Aluguel reservaSelecionada = new Aluguel();
+    private Aluguel aluguelSelecionado = new Aluguel();
+    
    
     public AluguelCadastraTela() {
         initComponents();
@@ -37,15 +39,15 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
     public void pesquisarBDReserva(){
         EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
-        DAOJPA<ItemDeProduto> dao = new DAOJPA<>(em,ItemDeProduto.class);
+        DAOJPA<Aluguel> dao = new DAOJPA<>(em,Aluguel.class);
         listaReservas = dao.listarStatus("Pendente");
         em.getTransaction().commit();
         em.close();
     }
     
     public void preencherTabelaReserva(){
-        ReservaTabelaModelo modelo = new ReservaTabelaModelo(listaReservas);
-        tabelaReservas.setModel(modelo);
+        ReservaTabelaModelo modelo1 = new ReservaTabelaModelo(listaReservas);
+        tabelaReservas.setModel(modelo1);
     }
     
     public void AtualizarReserva(){
@@ -80,29 +82,22 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
         
-        //SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
-        //Date date = new Date();
-        //String horaFormatada = formatoHora.format(date);
-        
-        //DateFormat formatoData = new SimpleDateFormat("yyyy-MM-dd");
         Date data = new Date();
         
-        Aluguel aluguel = new Aluguel();
-        aluguelSelecionado();        
-        Cliente cliente = em.find(Cliente.class,itemDeProdutoSelecionado.getCliente().getId());
+        Aluguel aluguel = reservaSelecionada;
+        itemProdutoSelecionado();        
+     
         
-        itemDeProdutoSelecionado.setStatus("Em Andamento");
-        em.merge(itemDeProdutoSelecionado);
+        reservaSelecionada.setStatus("Em Andamento");
+        em.merge(reservaSelecionada);
         
-        aluguel.setClienteAluguel(cliente);
+    
         aluguel.setHoraInicio(data);
-        JOptionPane.showMessageDialog(null, data,"Aviso", JOptionPane.INFORMATION_MESSAGE);
         aluguel.setStatus("Em Andamento");
         aluguel.setDataAluguel(data);
         
-        DAOJPA<Aluguel> dao = new DAOJPA<>(em,Aluguel.class);
+        em.merge(aluguel);
         
-        dao.Inserir(aluguel);
         em.getTransaction().commit();
         em.close();
         JOptionPane.showMessageDialog(null, "Aluguel Iniciado!!!");
@@ -111,10 +106,16 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
     
     
     //--------------------------metodos abaixo para consultar Item de Produto---
-    public ItemDeProduto aluguelSelecionado(){
-        itemDeProdutoSelecionado = listaReservas.get(tabelaReservas.getSelectedRow());
-        return itemDeProdutoSelecionado;
+    public Aluguel itemProdutoSelecionado(){
+        reservaSelecionada = listaReservas.get(tabelaReservas.getSelectedRow());
+        return reservaSelecionada;
     }
+    
+    public Aluguel AluguelSelecionado(){
+        aluguelSelecionado = listaAlugueis.get(tabelaAluguel.getSelectedRow());
+        return aluguelSelecionado;
+    }
+    
     public void selecionarLinhaTabela(java.awt.event.MouseEvent evt){
         tabelaReservas.clearSelection();
         int linha = tabelaReservas.rowAtPoint(evt.getPoint());
@@ -150,7 +151,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         campoNome1 = new javax.swing.JTextField();
         botaoPesquisar1 = new javax.swing.JButton();
-        botaoCadastrar4 = new javax.swing.JButton();
+        botaoTerminar = new javax.swing.JButton();
         botaoCadastrar5 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         botaoAtualizar = new javax.swing.JButton();
@@ -250,11 +251,11 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         botaoPesquisar1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         botaoPesquisar1.setText("Pesquisar");
 
-        botaoCadastrar4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        botaoCadastrar4.setText("Devolucao");
-        botaoCadastrar4.addActionListener(new java.awt.event.ActionListener() {
+        botaoTerminar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        botaoTerminar.setText("Terminar");
+        botaoTerminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoCadastrar4ActionPerformed(evt);
+                botaoTerminarActionPerformed(evt);
             }
         });
 
@@ -305,13 +306,13 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
                                         .addComponent(botaoPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(botaoCadastrar1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(botaoCadastrar4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(botaoCadastrar5, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                                     .addComponent(botaoCadastrar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(botaoIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(botaoAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(botaoAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(botaoCadastrar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(botaoTerminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -360,7 +361,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(botaoCadastrar1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCadastrar4)))
+                        .addComponent(botaoTerminar)))
                 .addGap(18, 18, 18)
                 .addComponent(botaoCancelar)
                 .addGap(47, 47, 47))
@@ -398,7 +399,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void tabelaReservasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaReservasMouseReleased
-        aluguelSelecionado();
+        itemProdutoSelecionado();
         selecionarLinhaTabela(evt);
         if(evt.getClickCount() > 1){
             abrirTelaConsulta();
@@ -410,17 +411,18 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCadastrar1ActionPerformed
 
     private void tabelaAluguelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAluguelMouseReleased
-        // TODO add your handling code here:
+        AluguelSelecionado();
     }//GEN-LAST:event_tabelaAluguelMouseReleased
 
     private void botaoCadastrar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoCadastrar3ActionPerformed
 
-    private void botaoCadastrar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar4ActionPerformed
+    private void botaoTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTerminarActionPerformed
         AluguelDevolucaoTela aluguelDevolucaoTela = new AluguelDevolucaoTela();
+        aluguelDevolucaoTela.setAluguel(AluguelSelecionado());
         aluguelDevolucaoTela.setVisible(true);
-    }//GEN-LAST:event_botaoCadastrar4ActionPerformed
+    }//GEN-LAST:event_botaoTerminarActionPerformed
 
     private void botaoCadastrar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar5ActionPerformed
         // TODO add your handling code here:
@@ -471,12 +473,12 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
     private javax.swing.JButton botaoAtualizar;
     private javax.swing.JButton botaoCadastrar1;
     private javax.swing.JButton botaoCadastrar3;
-    private javax.swing.JButton botaoCadastrar4;
     private javax.swing.JButton botaoCadastrar5;
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoIniciar;
     private javax.swing.JButton botaoPesquisar;
     private javax.swing.JButton botaoPesquisar1;
+    private javax.swing.JButton botaoTerminar;
     private javax.swing.JTextField campoCPF;
     private javax.swing.JTextField campoNome1;
     private javax.swing.JLabel jLabel1;

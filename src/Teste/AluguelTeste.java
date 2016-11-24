@@ -20,7 +20,7 @@ public class AluguelTeste {
         aluguel.setFuncionario(funcionario);
         Produto produto = em.find(Produto.class, 1L);
         
-        aluguel.setProduto(produto);
+        //aluguel.setProduto(produto);
         
         aluguel.setStatus("Finalizado");
         aluguel.setValorTotal(100.00);

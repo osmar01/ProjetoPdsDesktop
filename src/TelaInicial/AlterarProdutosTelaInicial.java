@@ -34,7 +34,7 @@ public class AlterarProdutosTelaInicial extends javax.swing.JFrame {
         labelPreco.setText(itemDeProduto.getProduto().getPreco().toString());
         labelQtde.setText(Integer.toString(itemDeProduto.getProduto().getQuantidade()));
         spinnerQtde.setValue(itemDeProduto.getQuantidade());
-        spinnerHora.setValue(itemDeProduto.getHora());
+//        spinnerHora.setValue(itemDeProduto.getHora());
         spinnerMinuto.setValue(itemDeProduto.getMinuto());
         
         //ImageIcon img = new ImageIcon(itemDeProduto.getCaminho());
@@ -45,7 +45,7 @@ public class AlterarProdutosTelaInicial extends javax.swing.JFrame {
     
     public void salvarAlteracoes(){
         
-        itemDeProduto.setHora(Integer.parseInt(spinnerHora.getValue().toString()));
+       // itemDeProduto.setHora(Integer.parseInt(spinnerHora.getValue().toString()));
         itemDeProduto.setMinuto(Integer.parseInt(spinnerMinuto.getValue().toString()));
         itemDeProduto.setQuantidade(Integer.parseInt(spinnerQtde.getValue().toString()));
         

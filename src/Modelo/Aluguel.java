@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import static org.hibernate.Hibernate.entity;
+import static org.hibernate.Hibernate.entity;
 
 /**
  *
@@ -35,10 +36,7 @@ public class Aluguel {
     
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Funcionario funcionario;
-    
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private Produto produto;
-    
+      
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Cliente clienteAluguel;
 
@@ -93,12 +91,12 @@ public class Aluguel {
         this.funcionario = funcionario;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public Date getDataAluguel() {
+        return dataAluguel;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setDataAluguel(Date dataAluguel) {
+        this.dataAluguel = dataAluguel;
     }
 
     public Cliente getClienteAluguel() {
@@ -109,13 +107,5 @@ public class Aluguel {
         this.clienteAluguel = clienteAluguel;
     }
 
-    public Date getDataAluguel() {
-        return dataAluguel;
-    }
-
-    public void setDataAluguel(Date dataAluguel) {
-        this.dataAluguel = dataAluguel;
-    }
-    
     
 }
