@@ -2,8 +2,10 @@
 package TelaInicial;
 
 import DAOJPA.DAOJPA;
+import Modelo.Aluguel;
 import Modelo.Cliente;
 import Modelo.ItemDeProduto;
+import Modelo.Produto;
 import Util.JPAUtil;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -38,26 +40,39 @@ public class FinalizarAluguelTela extends javax.swing.JFrame {
             
             ItemDeProduto itemDeProduto = new ItemDeProduto();
             
-            itemDeProduto.setHora(listaItensProdutos.get(i).getHora());
+            EntityManager em = JPAUtil.getEntityManager();
+            em.getTransaction().begin();
+            
+            
             itemDeProduto.setMinuto(listaItensProdutos.get(i).getMinuto());
             itemDeProduto.setQuantidade(listaItensProdutos.get(i).getQuantidade());
+            Produto produto = em.find(Produto.class,listaItensProdutos.get(i).getProduto().getId()) ;
+            itemDeProduto.setProduto(produto);
             itemDeProduto.setStatus("Pendente");
             
-            EntityManager entityManager = JPAUtil.getEntityManager();
-            entityManager.getTransaction().begin();
             
-            DAOJPA<Cliente> daocliente = new DAOJPA<>(entityManager, Cliente.class);
+            
+            DAOJPA<Cliente> daocliente = new DAOJPA<>(em, Cliente.class);
             clientes = daocliente.listarCPF(cliente.getCpf());
             cliente = clientes.get(0);
             
-            itemDeProduto.setCliente(cliente);
+            DAOJPA<Aluguel> daoAluguel = new DAOJPA<>(em, Aluguel.class);
+            Aluguel aluguel = new Aluguel();
+            aluguel.setClienteAluguel(cliente);
+            aluguel.setStatus("Pendente");
+            daoAluguel.Inserir(aluguel);
+            
+            
+            aluguel = em.find(Aluguel.class, cliente.getId());
+            itemDeProduto.setAluguel(aluguel);
+            
 
             
-            DAOJPA<ItemDeProduto> dao = new DAOJPA<>(entityManager, ItemDeProduto.class);
+            DAOJPA<ItemDeProduto> dao = new DAOJPA<>(em, ItemDeProduto.class);
             dao.Inserir(itemDeProduto);
 
-            entityManager.getTransaction().commit();
-            entityManager.close();
+            em.getTransaction().commit();
+            em.close();
         }
         JOptionPane.showMessageDialog(null, "Lista Finalizada!!!");
     }

@@ -1,15 +1,14 @@
 package ModeloTabela;
 
-import Modelo.Funcionario;
+import Modelo.Aluguel;
 import Modelo.ItemDeProduto;
-import Modelo.Produto;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public class ReservaTabelaModelo extends AbstractTableModel{
-    private List<ItemDeProduto> listaReservas;
+    private List<Aluguel> listaReservas;
 
-    public ReservaTabelaModelo(List<ItemDeProduto> listaReservas) {
+    public ReservaTabelaModelo(List<Aluguel> listaReservas) {
         this.listaReservas = listaReservas;
     }
      
@@ -25,12 +24,12 @@ public class ReservaTabelaModelo extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int linha, int coluna) {
-       ItemDeProduto deProduto = listaReservas.get(linha);
+       Aluguel aluguel = listaReservas.get(linha);
        switch(coluna){
-           case 0: return deProduto.getCliente().getNome();
-           case 1: return deProduto.getCliente().getCpf();
-           case 2: return deProduto.getStatus();
-           case 3: return deProduto.getTotal();
+           case 0: return aluguel.getClienteAluguel().getNome();
+           case 1: return aluguel.getClienteAluguel().getCpf();
+           case 2: return aluguel.getStatus();
+           case 3: return aluguel.getValorTotal();
         }
         return null;
     }

@@ -6,7 +6,9 @@ import DAOJPA.DAOJPA;
 import Modelo.Aluguel;
 import Modelo.Cliente;
 import Modelo.Funcionario;
+import Modelo.ItemDeProduto;
 import ModeloTabela.AluguelTabelaModelo;
+import ModeloTabela.DevolucaoTabelaModelo;
 import ModeloTabela.FuncionarioTabelaModelo;
 import Util.JPAUtil;
 import java.util.ArrayList;
@@ -15,57 +17,49 @@ import javax.persistence.EntityManager;
 
 
 public class AluguelDevolucaoTela extends javax.swing.JFrame {
-    private List<Aluguel> listaAluguel = new ArrayList<>();
+    private List<ItemDeProduto> listaItensProduto;
     
-    private Aluguel aluguel = new Aluguel();
-    private Aluguel aluguelSelecionado = new Aluguel();
+    private Aluguel aluguel;
+    
    
     public AluguelDevolucaoTela() {
         initComponents();
-        //Pesquisar();
+        
     }
     
-    public void preencherFiltro(){
-        Cliente cliente = new Cliente();
-       // cliente.setNome(campoNome.getText());
-        aluguel.setClienteAluguel(cliente);
+    public void setAluguel(Aluguel aluguel){
+        this.aluguel=aluguel;
+        Pesquisar();
+    
     }
-   
+
     public void pesquisarBD(){
         EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
-        DAOJPA<Aluguel> dao = new DAOJPA<>(entityManager,Aluguel.class);
-        listaAluguel = dao.listar(aluguel.getClienteAluguel().getNome());
+        DAOJPA<ItemDeProduto> dao = new DAOJPA<>(entityManager,ItemDeProduto.class);
+        listaItensProduto = dao.listarAluguelId(aluguel.getId());
         entityManager.getTransaction().commit();
         entityManager.close();
     }
     
     public void preencherTabela(){
-        AluguelTabelaModelo modelo = new AluguelTabelaModelo(listaAluguel);
-        tabelaAluguel.setModel(modelo);
+        DevolucaoTabelaModelo modelo = new DevolucaoTabelaModelo(listaItensProduto);
+        tabelaDevolucao.setModel(modelo);
     }
     
     public void Pesquisar(){
-        preencherFiltro();
         pesquisarBD();
         preencherTabela();
     }
     //--------------------------metodos abaixo para consultar funcionario------------------------------------------
-    public Aluguel aluguelSelecionado(){
-        aluguelSelecionado = listaAluguel.get(tabelaAluguel.getSelectedRow());
-        return aluguelSelecionado;
-    }
+  
     public void selecionarLinhaTabela(java.awt.event.MouseEvent evt){
-        tabelaAluguel.clearSelection();
-        int linha = tabelaAluguel.rowAtPoint(evt.getPoint());
-        tabelaAluguel.setRowSelectionInterval(linha, linha);
+        tabelaDevolucao.clearSelection();
+        int linha = tabelaDevolucao.rowAtPoint(evt.getPoint());
+        tabelaDevolucao.setRowSelectionInterval(linha, linha);
     }
     
-    public void abrirTelaConsulta(){
-       /* FuncionarioConsultaTela consultaTela = new FuncionarioConsultaTela();
-        consultaTela.setFuncionario(aluguelSelecionado());
-        consultaTela.setVisible(true);*/
-    }
+    
     
     
     @SuppressWarnings("unchecked")
@@ -77,11 +71,12 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaAluguel = new javax.swing.JTable();
+        tabelaDevolucao = new javax.swing.JTable();
         botaoCancelar = new javax.swing.JButton();
         botaoCadastrar3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        botaoCadastrar4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisar Funcionario");
@@ -96,23 +91,23 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(246, 253, 253));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setText("Devolução de Alugueis");
+        jLabel1.setText("Devolução de Produtos");
 
-        tabelaAluguel.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        tabelaAluguel.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaDevolucao.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        tabelaDevolucao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome do Produto", "Hora Inicio", "Valor do Produto", "Atrasos", "Condição"
+                "Produto", "Inicio do Aluguel", "Termino previsto", "Horario Devolvido", "Valor por 30min", "Atrasos", "Valor total"
             }
         ));
-        tabelaAluguel.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelaDevolucao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tabelaAluguelMouseReleased(evt);
+                tabelaDevolucaoMouseReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(tabelaAluguel);
+        jScrollPane1.setViewportView(tabelaDevolucao);
 
         botaoCancelar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         botaoCancelar.setText("Cancelar");
@@ -123,16 +118,24 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         });
 
         botaoCadastrar3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        botaoCadastrar3.setText("Finalizar");
+        botaoCadastrar3.setText("Efetuar Pagamento");
         botaoCadastrar3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCadastrar3ActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Valor Total");
+        jLabel2.setText("Valor Total Geral");
 
         jLabel3.setText("$$$$$$$$");
+
+        botaoCadastrar4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        botaoCadastrar4.setText("Devolver");
+        botaoCadastrar4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCadastrar4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -140,32 +143,36 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botaoCadastrar4, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(37, 37, 37)
+                                        .addComponent(jLabel2))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addGap(49, 49, 49))
+                                        .addComponent(botaoCadastrar3, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(118, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoCadastrar3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))))
-                .addGap(38, 38, 38))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 205, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,17 +184,19 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(botaoCadastrar4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCadastrar3)))
-                .addGap(18, 18, 18)
-                .addComponent(botaoCancelar)
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(botaoCadastrar3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoCancelar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -198,7 +207,9 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -213,17 +224,21 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         Pesquisar();
     }//GEN-LAST:event_formWindowGainedFocus
 
-    private void tabelaAluguelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAluguelMouseReleased
-        aluguelSelecionado();
-        selecionarLinhaTabela(evt);
+    private void tabelaDevolucaoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaDevolucaoMouseReleased
+        //aluguelSelecionado();
+        /*selecionarLinhaTabela(evt);
         if(evt.getClickCount() > 1){
             abrirTelaConsulta();
-        }
-    }//GEN-LAST:event_tabelaAluguelMouseReleased
+        }*/
+    }//GEN-LAST:event_tabelaDevolucaoMouseReleased
 
     private void botaoCadastrar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoCadastrar3ActionPerformed
+
+    private void botaoCadastrar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoCadastrar4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,6 +284,7 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar3;
+    private javax.swing.JButton botaoCadastrar4;
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -277,6 +293,6 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable tabelaAluguel;
+    private javax.swing.JTable tabelaDevolucao;
     // End of variables declaration//GEN-END:variables
 }

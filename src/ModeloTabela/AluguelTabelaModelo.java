@@ -2,9 +2,8 @@
 package ModeloTabela;
 
 import Modelo.Aluguel;
-import Modelo.Cliente;
-import Modelo.ItemDeProduto;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -31,7 +30,10 @@ public class AluguelTabelaModelo extends AbstractTableModel{
         Aluguel aluguel = listaAluguel.get(linha);
        switch(coluna){
            case 0: return aluguel.getClienteAluguel().getCpf();
-           case 1: return aluguel.getHoraInicio();
+           case 1: 
+                DateFormat formatoHora = new SimpleDateFormat("HH:mm");
+                String horaFormatada = formatoHora.format(aluguel.getHoraInicio());
+                return horaFormatada;
            case 2: return aluguel.getStatus();
            case 3: return aluguel.getValorTotal();
         }

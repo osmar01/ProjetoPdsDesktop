@@ -57,4 +57,9 @@ public class DAOJPA<Tipo> {
         Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.login = '"+login+"'"); 
         return consulta.getResultList();
     }
+    
+    public List<Tipo> listarAluguelId(Long id){
+        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.id = '"+id+"'"); 
+        return consulta.getResultList();
+    }
 }
