@@ -82,21 +82,29 @@ public class ProdutoConsultaTela extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(246, 253, 253));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setText("Consultar Produto");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 19, -1, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 590, -1));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 53, 590, -1));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel3.setText("Nome");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 73, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel5.setText("Preço");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 98, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel7.setText("Categoria");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 182, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel8.setText("Descricao");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 154, -1, -1));
 
         botaoAlterar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         botaoAlterar.setText("Alterar");
@@ -105,6 +113,7 @@ public class ProdutoConsultaTela extends javax.swing.JFrame {
                 botaoAlterarActionPerformed(evt);
             }
         });
+        jPanel1.add(botaoAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 217, 100, -1));
 
         botaoExcluir.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         botaoExcluir.setText("Excluir");
@@ -113,6 +122,7 @@ public class ProdutoConsultaTela extends javax.swing.JFrame {
                 botaoExcluirActionPerformed(evt);
             }
         });
+        jPanel1.add(botaoExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 217, 100, -1));
 
         botaoCancelar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         botaoCancelar.setText("Cancelar");
@@ -121,109 +131,27 @@ public class ProdutoConsultaTela extends javax.swing.JFrame {
                 botaoCancelarActionPerformed(evt);
             }
         });
+        jPanel1.add(botaoCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 217, 100, -1));
 
         labelNome.setText("*********************");
+        jPanel1.add(labelNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(114, 75, -1, -1));
 
         labelPreco.setText("*********************");
+        jPanel1.add(labelPreco, new org.netbeans.lib.awtextra.AbsoluteConstraints(114, 100, -1, -1));
 
         labelCategoria.setText("*********************");
+        jPanel1.add(labelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 184, -1, -1));
 
         labelDescricao.setText("*********************");
+        jPanel1.add(labelDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 156, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel11.setText("Quantidade");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 126, -1, -1));
 
         labelQtde.setText("*********************");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(botaoAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addGap(18, 18, 18)
-                            .addComponent(labelPreco))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGap(30, 30, 30)
-                            .addComponent(jLabel3)
-                            .addGap(18, 18, 18)
-                            .addComponent(labelNome)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel11))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelDescricao)
-                            .addComponent(labelCategoria)
-                            .addComponent(labelQtde))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel1)
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(labelNome))
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelPreco)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(labelQtde))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(labelDescricao))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(labelCategoria)))
-                    .addComponent(labelImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoAlterar)
-                    .addComponent(botaoExcluir)
-                    .addComponent(botaoCancelar))
-                .addContainerGap(88, Short.MAX_VALUE))
-        );
+        jPanel1.add(labelQtde, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 128, -1, -1));
+        jPanel1.add(labelImagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 69, 250, 130));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -233,9 +161,7 @@ public class ProdutoConsultaTela extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
         );
 
         pack();
