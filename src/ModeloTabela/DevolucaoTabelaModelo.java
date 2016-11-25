@@ -31,11 +31,11 @@ public class DevolucaoTabelaModelo extends AbstractTableModel{
         ItemDeProduto itemProduto = listaItensProduto.get(linha);
        switch(coluna){
            case 0: return itemProduto.getProduto().getNome();
-           case 1: return itemProduto.getHoraInicio();
-           case 2: return itemProduto.getHoraFim();
-           case 3: return itemProduto.getHoraDevolvida();
+           case 1: return itemProduto.getAluguel().getHoraInicio();
+           case 2: return itemProduto.getAluguel().getHoraPrevista();
+           case 3: return itemProduto.getAluguel().getHoraDevolvida();
            case 4: return itemProduto.getProduto().getPreco();
-           case 5: return Double.toString(itemProduto.getTotal());
+           case 5: return Double.toString(itemProduto.getTotalParcial());
         }
         return null;
     }

@@ -11,13 +11,17 @@ import ModeloTabela.AluguelTabelaModelo;
 import ModeloTabela.DevolucaoTabelaModelo;
 import ModeloTabela.FuncionarioTabelaModelo;
 import Util.JPAUtil;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 
 
 public class AluguelDevolucaoTela extends javax.swing.JFrame {
     private List<ItemDeProduto> listaItensProduto;
+    private ItemDeProduto itemDeProdutoSelecionado;
     
     private Aluguel aluguel;
     
@@ -59,6 +63,29 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         tabelaDevolucao.setRowSelectionInterval(linha, linha);
     }
     
+    public ItemDeProduto itemProdutoSelecionado(){
+        itemDeProdutoSelecionado = listaItensProduto.get(tabelaDevolucao.getSelectedRow());
+        return itemDeProdutoSelecionado;
+    }
+    
+    
+    public void devolverItemProduto(){
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.find(ItemDeProduto.class, itemDeProdutoSelecionado.getId());
+        Date data = new Date();
+        DateFormat formatoHora = new SimpleDateFormat("HH:mm");
+        String horaFormatada = formatoHora.format(data);
+        
+        //itemDeProdutoSelecionado.setHoraDevolvida(horaFormatada);
+        //itemDeProdutoSelecionado.setStatus("Devolvido");
+        entityManager.merge(itemDeProdutoSelecionado);
+        
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        
+    }
+    //
     
     
     
@@ -225,11 +252,8 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void tabelaDevolucaoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaDevolucaoMouseReleased
-        //aluguelSelecionado();
-        /*selecionarLinhaTabela(evt);
-        if(evt.getClickCount() > 1){
-            abrirTelaConsulta();
-        }*/
+        itemProdutoSelecionado();
+        
     }//GEN-LAST:event_tabelaDevolucaoMouseReleased
 
     private void botaoCadastrar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar3ActionPerformed
@@ -237,7 +261,8 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCadastrar3ActionPerformed
 
     private void botaoCadastrar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar4ActionPerformed
-        // TODO add your handling code here:
+        itemProdutoSelecionado();
+        devolverItemProduto();
     }//GEN-LAST:event_botaoCadastrar4ActionPerformed
 
     /**

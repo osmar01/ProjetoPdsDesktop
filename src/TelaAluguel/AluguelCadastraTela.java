@@ -14,7 +14,9 @@ import Util.JPAUtil;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
@@ -93,6 +95,14 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
         
     
         aluguel.setHoraInicio(data);
+        
+        ItemDeProduto deProduto = em.find(ItemDeProduto.class,reservaSelecionada.getId());
+        int minutos = deProduto.getMinuto();
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTime(data);
+        gc.add(Calendar.MINUTE,minutos);
+        
+        aluguel.setHoraPrevista(gc);
         aluguel.setStatus("Em Andamento");
         aluguel.setDataAluguel(data);
         

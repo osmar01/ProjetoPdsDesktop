@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,9 @@ public class Aluguel {
     
     private Date horaInicio;
     
-    private Date horaFim;
+    private GregorianCalendar horaPrevista;
+    
+    private String horaDevolvida;
     
     private Double valorTotal;
     
@@ -67,13 +70,14 @@ public class Aluguel {
         this.horaInicio = horaInicio;
     }
 
-    public Date getHoraFim() {
-        return horaFim;
+    public GregorianCalendar getHoraPrevista() {
+        return horaPrevista;
     }
 
-    public void setHoraFim(Date horaFim) {
-        this.horaFim = horaFim;
+    public void setHoraPrevista(GregorianCalendar horaPrevista) {
+        this.horaPrevista = horaPrevista;
     }
+
 
     public Double getValorTotal() {
         return valorTotal;
@@ -106,6 +110,16 @@ public class Aluguel {
     public void setClienteAluguel(Cliente clienteAluguel) {
         this.clienteAluguel = clienteAluguel;
     }
+
+    public String getHoraDevolvida() {
+        return horaDevolvida;
+    }
+
+    public void setHoraDevolvida(String horaDevolvida) {
+        this.horaDevolvida = horaDevolvida;
+    }
+    
+    
 
     
 }
