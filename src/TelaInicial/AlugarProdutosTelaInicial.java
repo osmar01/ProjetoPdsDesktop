@@ -42,12 +42,12 @@ public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
     
     public void inserirItem(){
         ItemDeProduto itemDeProduto = new ItemDeProduto();
+        int Minutos = Integer.parseInt(spinnerHora.getValue().toString())*60;
         
-        //itemDeProduto.setHora(Integer.parseInt(spinnerHora.getValue().toString()));
-        itemDeProduto.setMinuto(Integer.parseInt(spinnerMinuto.getValue().toString()));
+        itemDeProduto.setMinuto(Integer.parseInt(spinnerMinuto.getValue().toString())+Minutos);
         itemDeProduto.setQuantidade(Integer.parseInt(spinnerQtde.getValue().toString()));
         itemDeProduto.setProduto(produto);
-        itemDeProduto.setTotal(1000.00);
+        itemDeProduto.setTotalParcial(11000);
         
         listaItensProdutos.add(itemDeProduto);
         JOptionPane.showMessageDialog(null, "Produto adicionado na sua Lista");

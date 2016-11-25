@@ -19,19 +19,12 @@ public class ItemDeProduto {
     
     @Column(nullable = false,  length = 100)
     private int Quantidade;
-    
-    private String horaInicio;
-    
-    private String horaFim;
-    
+
     private int minuto;
     
-    private double total;
+    private double totalParcial;
     
-    private String status;
-    
-    private String horaDevolvida;
-    
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Produto produtoItem;
     
@@ -58,7 +51,6 @@ public class ItemDeProduto {
         this.Quantidade = Quantidade;
     }
 
-
     public int getMinuto() {
         return minuto;
     }
@@ -67,13 +59,6 @@ public class ItemDeProduto {
         this.minuto = minuto;
     }
 
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
 
     public Produto getProduto() {
         return produtoItem;
@@ -97,41 +82,8 @@ public class ItemDeProduto {
             horaParaMiniutos = hora*60;
             valorParcial = (produto.getPreco()   * (horaParaMiniutos + minuto)) * quantidade;
         }
-        this.total = valorParcial;
+        //this.total = valorParcial;
         
-    }
-
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(String horaInicio) {
-        this.horaInicio = horaInicio;
-    }
-
-    public String getHoraFim() {
-        return horaFim;
-    }
-
-    public void setHoraFim(String horaFim) {
-        this.horaFim = horaFim;
-    }
-
-    public String getHoraDevolvida() {
-        return horaDevolvida;
-    }
-
-    public void setHoraDevolvida(String horaDevolvida) {
-        this.horaDevolvida = horaDevolvida;
     }
 
     public Aluguel getAluguel() {
@@ -140,6 +92,22 @@ public class ItemDeProduto {
 
     public void setAluguel(Aluguel aluguel) {
         this.aluguel = aluguel;
+    }
+
+    public double getTotalParcial() {
+        return totalParcial;
+    }
+
+    public void setTotalParcial(double totalParcial) {
+        this.totalParcial = totalParcial;
+    }
+
+    public Produto getProdutoItem() {
+        return produtoItem;
+    }
+
+    public void setProdutoItem(Produto produtoItem) {
+        this.produtoItem = produtoItem;
     }
 
     

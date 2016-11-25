@@ -7,6 +7,9 @@ import Modelo.Cliente;
 import Modelo.ItemDeProduto;
 import Modelo.Produto;
 import Util.JPAUtil;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
@@ -46,9 +49,17 @@ public class FinalizarAluguelTela extends javax.swing.JFrame {
             
             itemDeProduto.setMinuto(listaItensProdutos.get(i).getMinuto());
             itemDeProduto.setQuantidade(listaItensProdutos.get(i).getQuantidade());
+            
+            
+            Date data = new Date();
+            DateFormat formatoHora = new SimpleDateFormat("HH:mm");
+            String horaFormatada = formatoHora.format(data);
+            
+            
+            
             Produto produto = em.find(Produto.class,listaItensProdutos.get(i).getProduto().getId()) ;
             itemDeProduto.setProduto(produto);
-            itemDeProduto.setStatus("Pendente");
+            
             
             
             

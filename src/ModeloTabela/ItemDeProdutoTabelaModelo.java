@@ -30,7 +30,7 @@ public class ItemDeProdutoTabelaModelo extends AbstractTableModel{
            case 0: return deProduto.getProduto().getNome();
            case 1: return deProduto.getProduto().getCategoria().getNome();
            case 2: return deProduto.getQuantidade();
-           case 3: return deProduto.getTotal();
+           case 3: return deProduto.getTotalParcial();
         }
         return null;
     }
