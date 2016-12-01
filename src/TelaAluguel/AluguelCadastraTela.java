@@ -1,144 +1,153 @@
-
 package TelaAluguel;
 
-import TelasFuncionario.*;
 import DAOJPA.DAOJPA;
 import Modelo.Aluguel;
-import Modelo.Cliente;
-import Modelo.Funcionario;
 import Modelo.ItemDeProduto;
 import ModeloTabela.AluguelTabelaModelo;
-import ModeloTabela.FuncionarioTabelaModelo;
 import ModeloTabela.ReservaTabelaModelo;
 import Util.JPAUtil;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 
-
 public class AluguelCadastraTela extends javax.swing.JFrame {
+
     private List<Aluguel> listaReservas = new ArrayList<>();
     private List<Aluguel> listaAlugueis = new ArrayList<>();
-    
+
     private Aluguel reservaSelecionada = new Aluguel();
     private Aluguel aluguelSelecionado = new Aluguel();
-    
-   
+    private Aluguel aluguelIniciado = new Aluguel();
+
     public AluguelCadastraTela() {
         initComponents();
         AtualizarReserva();
         AtualizarAluguel();
     }
-    
-    
-   //----------------Atualizar Reserva------------------------------------------
-    public void pesquisarBDReserva(){
+
+    //----------------Atualizar Reserva------------------------------------------
+    public void pesquisarBDReserva() {
         EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
-        DAOJPA<Aluguel> dao = new DAOJPA<>(em,Aluguel.class);
+        DAOJPA<Aluguel> dao = new DAOJPA<>(em, Aluguel.class);
         listaReservas = dao.listarStatus("Pendente");
         em.getTransaction().commit();
         em.close();
     }
-    
-    public void preencherTabelaReserva(){
+
+    public void preencherTabelaReserva() {
         ReservaTabelaModelo modelo1 = new ReservaTabelaModelo(listaReservas);
         tabelaReservas.setModel(modelo1);
     }
-    
-    public void AtualizarReserva(){
+
+    public void AtualizarReserva() {
         pesquisarBDReserva();
         preencherTabelaReserva();
     }
-    
+
     //---------------------------Atualizar Aluguel------------------------------
-    
-    public void pesquisarBDAluguel(){
+    public void pesquisarBDAluguel() {
         EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
-        DAOJPA<Aluguel> dao = new DAOJPA<>(em,Aluguel.class);
+        DAOJPA<Aluguel> dao = new DAOJPA<>(em, Aluguel.class);
         listaAlugueis = dao.listarStatus("Em Andamento");
         em.getTransaction().commit();
         em.close();
     }
-    
-    public void preencherTabelaAluguel(){
+
+    public void preencherTabelaAluguel() {
         AluguelTabelaModelo modelo = new AluguelTabelaModelo(listaAlugueis);
         tabelaAluguel.setModel(modelo);
     }
-    
-    public void AtualizarAluguel(){
+
+    public void AtualizarAluguel() {
         pesquisarBDAluguel();
         preencherTabelaAluguel();
     }
-    
-    
-    //---------------------------Inserindo Aluguel------------------------------
-    public void inserirAluguel(){
+
+    //---------------------------iniciar Aluguel------------------------------
+    public void iniciarAluguel() {
+        List<ItemDeProduto> itensDocliente = new ArrayList<>();
+
         EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
-        
+
         Date data = new Date();
+
+        aluguelIniciado = reservaSelecionado();
+
         
-        Aluguel aluguel = reservaSelecionada;
-        itemProdutoSelecionado();        
-     
-        
-        reservaSelecionada.setStatus("Em Andamento");
-        em.merge(reservaSelecionada);
-        
-    
-        aluguel.setHoraInicio(data);
-        
-        ItemDeProduto deProduto = em.find(ItemDeProduto.class,reservaSelecionada.getId());
-        int minutos = deProduto.getMinuto();
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.setTime(data);
-        gc.add(Calendar.MINUTE,minutos);
-        
-        aluguel.setHoraPrevista(gc);
-        aluguel.setStatus("Em Andamento");
-        aluguel.setDataAluguel(data);
-        
-        em.merge(aluguel);
-        
+        DAOJPA<ItemDeProduto> dao = new DAOJPA<>(em, ItemDeProduto.class);
+
+        itensDocliente = dao.listarItemProdutoId(aluguelIniciado.clienteAluguel);
+
+        for (int i = 0; i < itensDocliente.size(); i++) {
+            Aluguel aluguel = itensDocliente.get(i).getAluguel();
+            int minutos = itensDocliente.get(i).getMinuto();
+            
+            Calendar gc = Calendar.getInstance();
+            gc.setTime(data);
+            gc.add(Calendar.MINUTE, minutos);
+            aluguel.setHoraInicio(data);
+            aluguel.setHoraPrevista(gc);
+            aluguel.setStatus("Em Andamento");
+            aluguel.setDataAluguel(data);
+
+            em.merge(aluguel);
+        }
+
         em.getTransaction().commit();
         em.close();
         JOptionPane.showMessageDialog(null, "Aluguel Iniciado!!!");
-        
+
     }
-    
-    
+
     //--------------------------metodos abaixo para consultar Item de Produto---
-    public Aluguel itemProdutoSelecionado(){
+    public Aluguel reservaSelecionado() {
         reservaSelecionada = listaReservas.get(tabelaReservas.getSelectedRow());
         return reservaSelecionada;
     }
-    
-    public Aluguel AluguelSelecionado(){
+
+    public Aluguel AluguelSelecionado() {
         aluguelSelecionado = listaAlugueis.get(tabelaAluguel.getSelectedRow());
         return aluguelSelecionado;
     }
-    
-    public void selecionarLinhaTabela(java.awt.event.MouseEvent evt){
+
+    public void selecionarLinhaTabela(java.awt.event.MouseEvent evt) {
         tabelaReservas.clearSelection();
         int linha = tabelaReservas.rowAtPoint(evt.getPoint());
         tabelaReservas.setRowSelectionInterval(linha, linha);
     }
-    
-    public void abrirTelaConsulta(){
-       /* FuncionarioConsultaTela consultaTela = new FuncionarioConsultaTela();
+
+    public void selecionarLinhaTabelaAluguel(java.awt.event.MouseEvent evt) {
+        tabelaAluguel.clearSelection();
+        int linha = tabelaAluguel.rowAtPoint(evt.getPoint());
+        tabelaAluguel.setRowSelectionInterval(linha, linha);
+    }
+
+    public void abrirTelaTerminarAluguel() {
+        EntityManager em = JPAUtil.getEntityManager();
+        em.getTransaction().begin();
+        aluguelIniciado = AluguelSelecionado();
+        Aluguel aluguelTerminar = em.find(Aluguel.class, aluguelIniciado.getId());
+        em.getTransaction().commit();
+        em.close();
+
+        AluguelDevolucaoTela aluguelDevolucaoTela = new AluguelDevolucaoTela();
+        aluguelDevolucaoTela.setAluguel(aluguelTerminar);
+        aluguelDevolucaoTela.setVisible(true);
+
+    }
+
+    public void abrirTelaConsulta() {
+        /* FuncionarioConsultaTela consultaTela = new FuncionarioConsultaTela();
         consultaTela.setFuncionario(aluguelSelecionado());
         consultaTela.setVisible(true);*/
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -397,10 +406,10 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIniciarActionPerformed
-        inserirAluguel();
+        iniciarAluguel();
         AtualizarReserva();
         AtualizarAluguel();
-        
+
     }//GEN-LAST:event_botaoIniciarActionPerformed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
@@ -409,9 +418,9 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void tabelaReservasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaReservasMouseReleased
-        itemProdutoSelecionado();
+        reservaSelecionado();
         selecionarLinhaTabela(evt);
-        if(evt.getClickCount() > 1){
+        if (evt.getClickCount() > 1) {
             abrirTelaConsulta();
         }
     }//GEN-LAST:event_tabelaReservasMouseReleased
@@ -429,9 +438,7 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCadastrar3ActionPerformed
 
     private void botaoTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTerminarActionPerformed
-        AluguelDevolucaoTela aluguelDevolucaoTela = new AluguelDevolucaoTela();
-        aluguelDevolucaoTela.setAluguel(AluguelSelecionado());
-        aluguelDevolucaoTela.setVisible(true);
+        abrirTelaTerminarAluguel();
     }//GEN-LAST:event_botaoTerminarActionPerformed
 
     private void botaoCadastrar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar5ActionPerformed

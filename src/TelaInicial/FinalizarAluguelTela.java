@@ -71,16 +71,18 @@ public class FinalizarAluguelTela extends javax.swing.JFrame {
             Aluguel aluguel = new Aluguel();
             aluguel.setClienteAluguel(cliente);
             aluguel.setStatus("Pendente");
-            daoAluguel.Inserir(aluguel);
+            
+            daoAluguel.Inserir(aluguel);//Inserindo a lista de produtos do cliente 
             
             
-            aluguel = em.find(Aluguel.class, cliente.getId());
+            aluguel = em.find(Aluguel.class, aluguel.getId());
             itemDeProduto.setAluguel(aluguel);
             
 
             
             DAOJPA<ItemDeProduto> dao = new DAOJPA<>(em, ItemDeProduto.class);
-            dao.Inserir(itemDeProduto);
+            
+            dao.Inserir(itemDeProduto);// inserindo o item de Produto;
 
             em.getTransaction().commit();
             em.close();

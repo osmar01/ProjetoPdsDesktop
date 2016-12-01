@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.persistence.CascadeType;
@@ -29,7 +30,7 @@ public class Aluguel {
     
     private Date horaInicio;
     
-    private GregorianCalendar horaPrevista;
+    private Calendar horaPrevista;
     
     private String horaDevolvida;
     
@@ -41,7 +42,7 @@ public class Aluguel {
     private Funcionario funcionario;
       
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private Cliente clienteAluguel;
+    public Cliente clienteAluguel;
 
     public Aluguel() {
     }
@@ -70,11 +71,11 @@ public class Aluguel {
         this.horaInicio = horaInicio;
     }
 
-    public GregorianCalendar getHoraPrevista() {
+    public Calendar getHoraPrevista() {
         return horaPrevista;
     }
 
-    public void setHoraPrevista(GregorianCalendar horaPrevista) {
+    public void setHoraPrevista(Calendar horaPrevista) {
         this.horaPrevista = horaPrevista;
     }
 

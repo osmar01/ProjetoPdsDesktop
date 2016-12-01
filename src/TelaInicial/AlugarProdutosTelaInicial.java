@@ -88,7 +88,7 @@ public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastrar Funcionário");
+        setTitle("Alugar Produto");
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
                 formWindowGainedFocus(evt);

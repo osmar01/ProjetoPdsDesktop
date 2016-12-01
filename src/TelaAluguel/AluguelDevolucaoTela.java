@@ -1,19 +1,13 @@
 
 package TelaAluguel;
 
-import TelasFuncionario.*;
 import DAOJPA.DAOJPA;
 import Modelo.Aluguel;
-import Modelo.Cliente;
-import Modelo.Funcionario;
 import Modelo.ItemDeProduto;
-import ModeloTabela.AluguelTabelaModelo;
 import ModeloTabela.DevolucaoTabelaModelo;
-import ModeloTabela.FuncionarioTabelaModelo;
 import Util.JPAUtil;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -41,7 +35,7 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
         DAOJPA<ItemDeProduto> dao = new DAOJPA<>(entityManager,ItemDeProduto.class);
-        listaItensProduto = dao.listarAluguelId(aluguel.getId());
+        listaItensProduto = dao.listarItemProdutoIdStatus(aluguel.getClienteAluguel());
         entityManager.getTransaction().commit();
         entityManager.close();
     }
@@ -72,17 +66,18 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
     public void devolverItemProduto(){
         EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
-        entityManager.find(ItemDeProduto.class, itemDeProdutoSelecionado.getId());
+        ItemDeProduto deProduto = entityManager.find(ItemDeProduto.class, itemDeProdutoSelecionado.getId());
         Date data = new Date();
         DateFormat formatoHora = new SimpleDateFormat("HH:mm");
         String horaFormatada = formatoHora.format(data);
         
-        //itemDeProdutoSelecionado.setHoraDevolvida(horaFormatada);
-        //itemDeProdutoSelecionado.setStatus("Devolvido");
-        entityManager.merge(itemDeProdutoSelecionado);
+        deProduto.getAluguel().setHoraDevolvida(horaFormatada);
+        deProduto.getAluguel().setStatus("Devolvido");
+        entityManager.merge(deProduto);
         
         entityManager.getTransaction().commit();
         entityManager.close();
+        
         
     }
     //
@@ -106,7 +101,7 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         botaoCadastrar4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Pesquisar Funcionario");
+        setTitle("Devolucao de Produtos");
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
                 formWindowGainedFocus(evt);
