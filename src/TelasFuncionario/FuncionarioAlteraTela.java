@@ -25,6 +25,7 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
         jLabelAst6.setForeground(Color.red);
         jLabelAst7.setForeground(Color.red);
         jLabelAst8.setForeground(Color.red);
+        jLabelCampoObrg.setForeground(Color.red);
     }
     public void setFuncionario(Funcionario fun){
         this.fun = fun;
@@ -112,6 +113,7 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
         jLabelAst6 = new javax.swing.JLabel();
         jLabelAst7 = new javax.swing.JLabel();
         jLabelAst8 = new javax.swing.JLabel();
+        jLabelCampoObrg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alterar Funcionario");
@@ -211,6 +213,9 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
 
         jLabelAst8.setText("*");
 
+        jLabelCampoObrg.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabelCampoObrg.setText("(*) Campos Obrigatórios");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -295,6 +300,9 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
                                     .addComponent(campoTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
                                 .addComponent(radioFeminino))))
                     .addContainerGap()))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(153, 153, 153)
+                .addComponent(jLabelCampoObrg))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,7 +363,9 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoSalvar)
                     .addComponent(botaoCancelar))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabelCampoObrg)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -497,6 +507,7 @@ public class FuncionarioAlteraTela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAst6;
     private javax.swing.JLabel jLabelAst7;
     private javax.swing.JLabel jLabelAst8;
+    private javax.swing.JLabel jLabelCampoObrg;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;

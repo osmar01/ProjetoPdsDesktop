@@ -130,14 +130,14 @@ public class TelaInicial extends javax.swing.JFrame {
             if (campoSenha.getText().equals(fun.getSenha())) {
                 if (fun.getTipo().equals("adm")) {
                     liberaCamposAdm();
-                    JOptionPane.showMessageDialog(null, "Bem Vindo Administrador");
+                    JOptionPane.showMessageDialog(null, "Bem Vindo Administrador!");
                     limpaCampos();
                     botaoEntrar.setEnabled(false);
                     botaoSair.setEnabled(true);
                     bloqueiaCampos();
                 } else {
                     liberaCamposFun();
-                    JOptionPane.showMessageDialog(null, "Bem Vindo");
+                    JOptionPane.showMessageDialog(null, "Bem Vindo Funcionário!");
                     limpaCampos();
                     botaoEntrar.setEnabled(false);
                     botaoSair.setEnabled(true);
@@ -146,10 +146,12 @@ public class TelaInicial extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Senha incorreta!");
                 campoSenha.setText("");
+                campoSenha.requestFocus();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Login Incorreto!!!");
-
+            campoLogin.setText("");
+            campoLogin.requestFocus();
         }
 
     }

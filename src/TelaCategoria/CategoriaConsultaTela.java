@@ -67,7 +67,7 @@ public class CategoriaConsultaTela extends javax.swing.JFrame {
         jLabel3.setText("Nome");
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel5.setText("Descricao");
+        jLabel5.setText("Descrição");
 
         botaoAlterar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         botaoAlterar.setText("Alterar");
@@ -111,19 +111,21 @@ public class CategoriaConsultaTela extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(botaoAlterar)
-                .addGap(42, 42, 42)
-                .addComponent(botaoExcluir)
-                .addGap(52, 52, 52)
-                .addComponent(botaoCancelar))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(79, 79, 79)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel3))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel3)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(botaoAlterar)))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(botaoExcluir)
+                        .addGap(32, 32, 32)
+                        .addComponent(botaoCancelar))
                     .addComponent(labelNome)
                     .addComponent(labelDescricao)))
         );
@@ -147,9 +149,9 @@ public class CategoriaConsultaTela extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(labelDescricao))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoAlterar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoExcluir)
+                    .addComponent(botaoAlterar)
                     .addComponent(botaoCancelar))
                 .addContainerGap(23, Short.MAX_VALUE))
         );

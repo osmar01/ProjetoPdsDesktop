@@ -19,6 +19,7 @@ public class CategoriaCadastraTela extends javax.swing.JFrame {
         initComponents();
         jLabelAst1.setForeground(Color.red);
         jLabelAst2.setForeground(Color.red);
+        jLabelCampoObrg.setForeground(Color.red);
     }
 
     public void insereCategoria(){
@@ -62,6 +63,7 @@ public class CategoriaCadastraTela extends javax.swing.JFrame {
         campoDescricao = new javax.swing.JTextField();
         jLabelAst1 = new javax.swing.JLabel();
         jLabelAst2 = new javax.swing.JLabel();
+        jLabelCampoObrg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Funcionario");
@@ -96,6 +98,9 @@ public class CategoriaCadastraTela extends javax.swing.JFrame {
         jLabelAst1.setText("*");
 
         jLabelAst2.setText("*");
+
+        jLabelCampoObrg.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabelCampoObrg.setText("(*) Campos Obrigatórios");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,8 +137,11 @@ public class CategoriaCadastraTela extends javax.swing.JFrame {
                                         .addComponent(botaoCadastrar)
                                         .addGap(60, 60, 60)
                                         .addComponent(botaoCancelar))
-                                    .addComponent(campoDescricao))))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                                    .addComponent(campoDescricao)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(jLabelCampoObrg)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,16 +166,16 @@ public class CategoriaCadastraTela extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoCadastrar)
                     .addComponent(botaoCancelar))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabelCampoObrg)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,6 +252,7 @@ public class CategoriaCadastraTela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelAst1;
     private javax.swing.JLabel jLabelAst2;
+    private javax.swing.JLabel jLabelCampoObrg;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
