@@ -65,8 +65,12 @@ public class DAOJPA<Tipo> {
         return consulta.getResultList();
     }
     
-    public List<Tipo> listarItemProdutoIdStatus(Cliente cliente){
+    public List<Tipo> listarItemProdutoIdStatusAndamento(Cliente cliente){
         Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.aluguel.clienteAluguel = '"+cliente.getId()+"' and o.aluguel.status = 'Em andamento'"); 
+        return consulta.getResultList();
+    }
+    public List<Tipo> listarItemProdutoIdStatusPendente(Cliente cliente){
+        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.aluguel.clienteAluguel = '"+cliente.getId()+"' and o.aluguel.status = 'Pendente'"); 
         return consulta.getResultList();
     }
     

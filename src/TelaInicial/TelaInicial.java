@@ -98,14 +98,14 @@ public class TelaInicial extends javax.swing.JFrame {
         tabelaProduto.setRowSelectionInterval(linha, linha);
     }
 
-    public void abrirProdutoConsultaTela() {
+    public void abrirAlugarProdutoTela() {
         AlugarProdutosTelaInicial consultaTela = new AlugarProdutosTelaInicial();
         consultaTela.setListaItensProdutos(listaItensProdutos);
         consultaTela.setProduto(produtoSelecionado());
         consultaTela.setVisible(true);
 
     }
-   //------------------------------INSERE ITEM DE PRODUTO ------------------------------
+    //------------------------------INSERE ITEM DE PRODUTO ------------------------------
 
     public void abrirTelaFinalizarAluguel() {
         FinalizarAluguelTela aluguelTela = new FinalizarAluguelTela();
@@ -115,30 +115,27 @@ public class TelaInicial extends javax.swing.JFrame {
 
     }
 
-    public void abrirTelaListarProduto(){
+    public void abrirTelaListarProduto() {
         ListarAluguelTela aluguelTela = new ListarAluguelTela();
         aluguelTela.setListaProdutos(listaItensProdutos);
         aluguelTela.setVisible(true);
     }
-    
+
     //--------------------------------Login-------------------------------------------
-    
-    public void verificaLogin(){
-        
+    public void verificaLogin() {
+
         fun = consultaFuncionario();
-        
-        
-        if(campoLogin.getText().equals(fun.getLogin())){
-            if(campoSenha.getText().equals(fun.getSenha())){
-                if(fun.getTipo().equals("adm")){
+
+        if (campoLogin.getText().equals(fun.getLogin())) {
+            if (campoSenha.getText().equals(fun.getSenha())) {
+                if (fun.getTipo().equals("adm")) {
                     liberaCamposAdm();
                     JOptionPane.showMessageDialog(null, "Bem Vindo Administrador");
                     limpaCampos();
                     botaoEntrar.setEnabled(false);
                     botaoSair.setEnabled(true);
                     bloqueiaCampos();
-                }
-                else{
+                } else {
                     liberaCamposFun();
                     JOptionPane.showMessageDialog(null, "Bem Vindo");
                     limpaCampos();
@@ -146,20 +143,18 @@ public class TelaInicial extends javax.swing.JFrame {
                     botaoSair.setEnabled(true);
                     bloqueiaCampos();
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Senha incorreta!");
+                campoSenha.setText("");
             }
-            else{
-            JOptionPane.showMessageDialog(null, "Senha incorreta!");
-            campoSenha.setText("");
-            }
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Login Incorreto!!!");
-            
+
         }
-    
+
     }
-    
-    public void liberaCamposAdm(){
+
+    public void liberaCamposAdm() {
         menuCadastros.setEnabled(true);
         menuItemFuncionario.setEnabled(true);
         menuItemProduto.setEnabled(true);
@@ -168,20 +163,20 @@ public class TelaInicial extends javax.swing.JFrame {
         menuRelatorio.setEnabled(true);
         menuSobre.setEnabled(true);
     }
-    
-    public void liberaCamposFun(){
+
+    public void liberaCamposFun() {
         menuCadastros.setEnabled(true);
         menuMovimentacoes.setEnabled(true);
         menuRelatorio.setEnabled(true);
         menuSobre.setEnabled(true);
     }
-    
-    public void sairLogin(){
+
+    public void sairLogin() {
         bloqueiaMenus();
-    
+
     }
-    
-    public void bloqueiaMenus(){
+
+    public void bloqueiaMenus() {
         menuCadastros.setEnabled(false);
         menuItemFuncionario.setEnabled(false);
         menuItemProduto.setEnabled(false);
@@ -191,64 +186,62 @@ public class TelaInicial extends javax.swing.JFrame {
         menuSobre.setEnabled(false);
         JOptionPane.showMessageDialog(null, "Login Encerrado!!!");
     }
-    
-    public void limpaCampos(){
+
+    public void limpaCampos() {
         campoLogin.setText("");
         campoSenha.setText("");
     }
-    
-    public void bloqueiaCampos(){
+
+    public void bloqueiaCampos() {
         campoLogin.setEnabled(false);
         campoSenha.setEnabled(false);
     }
-    
-    public void liberaCampos(){
+
+    public void liberaCampos() {
         campoLogin.setEnabled(true);
         campoSenha.setEnabled(true);
     }
-    
-    public Funcionario consultaFuncionario(){
+
+    public Funcionario consultaFuncionario() {
         EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
         DAOJPA<Funcionario> dao = new DAOJPA<>(entityManager, Funcionario.class);
         List<Funcionario> listaFuncionarios = dao.listarLogin(campoLogin.getText());
-        
+
         Funcionario fun = listaFuncionarios.get(0);
-        
+
         entityManager.getTransaction().commit();
         entityManager.close();
-        
+
         return fun;
     }
-    
+
     //---------------------------------primeiro Cadastro de Administrador-------------------
-    
-    public void verificaAdm(){
+    public void verificaAdm() {
         EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
         DAOJPA<Funcionario> dao = new DAOJPA<>(entityManager, Funcionario.class);
         List<Funcionario> listaFuncionarios = dao.listar("");
         boolean bol = true;
-        for (Funcionario e: listaFuncionarios){
-           if(e.getTipo().equals("adm")){
-               JOptionPane.showMessageDialog(null, "Aplicacao Iniciada com sucesso!");
-               bol=false;
-               break;
-           }
-           else{
-               bol=true;
-           }
+        for (Funcionario e : listaFuncionarios) {
+            if (e.getTipo().equals("adm")) {
+                JOptionPane.showMessageDialog(null, "Aplicacao Iniciada com sucesso!");
+                bol = false;
+                break;
+            } else {
+                bol = true;
+            }
         }
-        if(bol){
+        if (bol) {
             JOptionPane.showMessageDialog(null, "A Aplicacao ainda nao tem administrador!\n"
-                       + "È necessario Cadastar");
-               FuncionarioCadastraTela cadastraTela  = new FuncionarioCadastraTela();
-               cadastraTela.setVisible(true);
+                    + "È necessario Cadastar");
+            FuncionarioCadastraTela cadastraTela = new FuncionarioCadastraTela();
+            cadastraTela.setVisible(true);
         }
-        
+
         entityManager.getTransaction().commit();
         entityManager.close();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -667,13 +660,13 @@ public class TelaInicial extends javax.swing.JFrame {
         produtoSelecionado();
         selecionarLinhaTabelaProduto(evt);
         if (evt.getClickCount() > 1) {
-            abrirProdutoConsultaTela();
+            abrirAlugarProdutoTela();
         }
     }//GEN-LAST:event_tabelaProdutoMouseReleased
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         produtoSelecionado();
-        abrirProdutoConsultaTela();
+        abrirAlugarProdutoTela();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void botaoFinalizarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarListaActionPerformed

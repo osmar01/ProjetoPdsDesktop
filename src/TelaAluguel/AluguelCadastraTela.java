@@ -79,15 +79,14 @@ public class AluguelCadastraTela extends javax.swing.JFrame {
 
         aluguelIniciado = reservaSelecionado();
 
-        
         DAOJPA<ItemDeProduto> dao = new DAOJPA<>(em, ItemDeProduto.class);
 
-        itensDocliente = dao.listarItemProdutoId(aluguelIniciado.clienteAluguel);
+        itensDocliente = dao.listarItemProdutoIdStatusPendente(aluguelIniciado.clienteAluguel);
 
         for (int i = 0; i < itensDocliente.size(); i++) {
             Aluguel aluguel = itensDocliente.get(i).getAluguel();
             int minutos = itensDocliente.get(i).getMinuto();
-            
+
             Calendar gc = Calendar.getInstance();
             gc.setTime(data);
             gc.add(Calendar.MINUTE, minutos);

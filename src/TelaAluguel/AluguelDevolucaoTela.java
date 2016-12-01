@@ -4,6 +4,7 @@ package TelaAluguel;
 import DAOJPA.DAOJPA;
 import Modelo.Aluguel;
 import Modelo.ItemDeProduto;
+import Modelo.Produto;
 import ModeloTabela.DevolucaoTabelaModelo;
 import Util.JPAUtil;
 import java.text.DateFormat;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.swing.JOptionPane;
 
 
 public class AluguelDevolucaoTela extends javax.swing.JFrame {
@@ -35,7 +37,7 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         EntityManager entityManager = JPAUtil.getEntityManager();
         entityManager.getTransaction().begin();
         DAOJPA<ItemDeProduto> dao = new DAOJPA<>(entityManager,ItemDeProduto.class);
-        listaItensProduto = dao.listarItemProdutoIdStatus(aluguel.getClienteAluguel());
+        listaItensProduto = dao.listarItemProdutoIdStatusAndamento(aluguel.getClienteAluguel());
         entityManager.getTransaction().commit();
         entityManager.close();
     }
@@ -49,7 +51,7 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         pesquisarBD();
         preencherTabela();
     }
-    //--------------------------metodos abaixo para consultar funcionario------------------------------------------
+    //--------------------------metodos abaixo para devolver produto------------------------------------------
   
     public void selecionarLinhaTabela(java.awt.event.MouseEvent evt){
         tabelaDevolucao.clearSelection();
@@ -74,9 +76,16 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         deProduto.getAluguel().setHoraDevolvida(horaFormatada);
         deProduto.getAluguel().setStatus("Devolvido");
         entityManager.merge(deProduto);
-        
+        //-------devolver a quantidade do produto------
+        int qtde = deProduto.getQuantidade();
+        Produto produto = deProduto.getProduto();
+        produto.setQuantidade(produto.getQuantidade()+qtde);
+        entityManager.merge(produto);
+        //-------------------------------------fim------
         entityManager.getTransaction().commit();
         entityManager.close();
+        
+        JOptionPane.showMessageDialog(null, "Produto Pago!!!\nProduto Devolvido: "+deProduto.getProduto().getNome());
         
         
     }
@@ -98,7 +107,7 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         botaoCadastrar3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        botaoCadastrar4 = new javax.swing.JButton();
+        botaoDevolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Devolucao de Produtos");
@@ -151,11 +160,11 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
 
         jLabel3.setText("$$$$$$$$");
 
-        botaoCadastrar4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        botaoCadastrar4.setText("Devolver");
-        botaoCadastrar4.addActionListener(new java.awt.event.ActionListener() {
+        botaoDevolver.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        botaoDevolver.setText("Devolver");
+        botaoDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoCadastrar4ActionPerformed(evt);
+                botaoDevolverActionPerformed(evt);
             }
         });
 
@@ -170,7 +179,7 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
                         .addComponent(jScrollPane1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botaoCadastrar4, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -208,7 +217,7 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(botaoCadastrar4)
+                        .addComponent(botaoDevolver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -255,10 +264,10 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoCadastrar3ActionPerformed
 
-    private void botaoCadastrar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrar4ActionPerformed
+    private void botaoDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDevolverActionPerformed
         itemProdutoSelecionado();
         devolverItemProduto();
-    }//GEN-LAST:event_botaoCadastrar4ActionPerformed
+    }//GEN-LAST:event_botaoDevolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,8 +313,8 @@ public class AluguelDevolucaoTela extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar3;
-    private javax.swing.JButton botaoCadastrar4;
     private javax.swing.JButton botaoCancelar;
+    private javax.swing.JButton botaoDevolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
