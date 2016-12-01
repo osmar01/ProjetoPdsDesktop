@@ -5,6 +5,8 @@
  */
 package DAOJPA;
 
+import Modelo.Aluguel;
+import Modelo.Cliente;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -49,7 +51,7 @@ public class DAOJPA<Tipo> {
     }
     
     public List<Tipo> listarStatus(String status){
-        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.status = '"+status+"'"); 
+        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.status = '"+status+"' group by o.clienteAluguel"); 
         return consulta.getResultList();
     }
     
@@ -58,8 +60,22 @@ public class DAOJPA<Tipo> {
         return consulta.getResultList();
     }
     
-    public List<Tipo> listarAluguelId(Long id){
-        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.id = '"+id+"'"); 
+    public List<Tipo> listarItemProdutoId(Cliente cliente){
+        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.aluguel.clienteAluguel = '"+cliente.getId()+"'"); 
+        return consulta.getResultList();
+    }
+    
+    public List<Tipo> listarItemProdutoIdStatusAndamento(Cliente cliente){
+        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.aluguel.clienteAluguel = '"+cliente.getId()+"' and o.aluguel.status = 'Em andamento'"); 
+        return consulta.getResultList();
+    }
+    public List<Tipo> listarItemProdutoIdStatusPendente(Cliente cliente){
+        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.aluguel.clienteAluguel = '"+cliente.getId()+"' and o.aluguel.status = 'Pendente'"); 
+        return consulta.getResultList();
+    }
+    
+    public List<Tipo> listarAluguelId(Cliente cliente){
+        Query consulta = em.createQuery("select o from "+classe.getName()+" o where o.aluguel.clienteAluguel = '"+cliente.getId()+"'"); 
         return consulta.getResultList();
     }
 }

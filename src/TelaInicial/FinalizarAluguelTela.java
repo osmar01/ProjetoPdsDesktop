@@ -1,4 +1,3 @@
-
 package TelaInicial;
 
 import DAOJPA.DAOJPA;
@@ -15,85 +14,73 @@ import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 
 public class FinalizarAluguelTela extends javax.swing.JFrame {
+
     private Cliente cliente;
     private List<Cliente> clientes;
     private List<ItemDeProduto> listaItensProdutos;
-  
+
     public FinalizarAluguelTela() {
         initComponents();
     }
-    
-    public void setCliente(Cliente cliente){
+
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    public void setListaItensProdutos(List<ItemDeProduto> listaItensProdutos){
+
+    public void setListaItensProdutos(List<ItemDeProduto> listaItensProdutos) {
         this.listaItensProdutos = listaItensProdutos;
     }
-    
-    public void preencheCliente(){
+
+    public void preencheCliente() {
 
         cliente.setCpf(campoCPF.getText());
-        
+
     }
-    
+
     public void insereItemProduto() {
 
         for (int i = 0; i < listaItensProdutos.size(); i++) {
-           
-            
+
             ItemDeProduto itemDeProduto = new ItemDeProduto();
-            
+
             EntityManager em = JPAUtil.getEntityManager();
             em.getTransaction().begin();
-            
-            
+
             itemDeProduto.setMinuto(listaItensProdutos.get(i).getMinuto());
             itemDeProduto.setQuantidade(listaItensProdutos.get(i).getQuantidade());
-            
-            
-            Date data = new Date();
-            DateFormat formatoHora = new SimpleDateFormat("HH:mm");
-            String horaFormatada = formatoHora.format(data);
-            
-            
-            
-            Produto produto = em.find(Produto.class,listaItensProdutos.get(i).getProduto().getId()) ;
+            itemDeProduto.setTotalParcial(listaItensProdutos.get(i).getTotalParcial());
+            Produto produto = em.find(Produto.class, listaItensProdutos.get(i).getProduto().getId());
             itemDeProduto.setProduto(produto);
-            
-            
-            
-            
+
             DAOJPA<Cliente> daocliente = new DAOJPA<>(em, Cliente.class);
             clientes = daocliente.listarCPF(cliente.getCpf());
             cliente = clientes.get(0);
-            
+
             DAOJPA<Aluguel> daoAluguel = new DAOJPA<>(em, Aluguel.class);
             Aluguel aluguel = new Aluguel();
             aluguel.setClienteAluguel(cliente);
             aluguel.setStatus("Pendente");
-            daoAluguel.Inserir(aluguel);
-            
-            
-            aluguel = em.find(Aluguel.class, cliente.getId());
-            itemDeProduto.setAluguel(aluguel);
-            
 
-            
+            daoAluguel.Inserir(aluguel);//Inserindo a lista de produtos do cliente 
+
+            aluguel = em.find(Aluguel.class, aluguel.getId());
+            itemDeProduto.setAluguel(aluguel);
+
             DAOJPA<ItemDeProduto> dao = new DAOJPA<>(em, ItemDeProduto.class);
-            dao.Inserir(itemDeProduto);
+
+            dao.Inserir(itemDeProduto);// inserindo o item de Produto;
 
             em.getTransaction().commit();
             em.close();
         }
-        JOptionPane.showMessageDialog(null, "Lista Finalizada!!!");
+        JOptionPane.showMessageDialog(null, "Lista Finalizada!!!\nDirija -se ao Caixa para inciar o Aluguel\nObrigado");
     }
-    
-    
-    public void limpaCampos(){
+
+    public void limpaCampos() {
         campoCPF.setText("");
         listaItensProdutos.clear();
     }
- 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -215,7 +202,6 @@ public class FinalizarAluguelTela extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
-   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

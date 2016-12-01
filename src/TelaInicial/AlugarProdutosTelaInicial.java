@@ -2,60 +2,79 @@ package TelaInicial;
 
 import Modelo.ItemDeProduto;
 import Modelo.Produto;
+import Util.JPAUtil;
 import java.awt.Image;
 import java.io.File;
 import java.util.List;
+import javax.persistence.EntityManager;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-
 public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
+
     private Produto produto;
     private List<ItemDeProduto> listaItensProdutos;
-  
+    double totalParcial;
+
     public AlugarProdutosTelaInicial() {
         initComponents();
+
     }
-    public void setProduto(Produto produto){
+
+    public void setProduto(Produto produto) {
         this.produto = produto;
         setLabels();
     }
-    public void setListaItensProdutos(List<ItemDeProduto> listaItensProdutos){
+
+    public void setListaItensProdutos(List<ItemDeProduto> listaItensProdutos) {
         this.listaItensProdutos = listaItensProdutos;
     }
-    
-    public void setLabels(){
+
+    public void setLabels() {
         labelNome.setText(produto.getNome());
         labelDescricao.setText(produto.getDescricao());
         labelCategoria.setText(produto.getCategoria().getNome());
         labelPreco.setText(produto.getPreco().toString());
         labelQtde.setText(Integer.toString(produto.getQuantidade()));
-        
+        labelTotalParcial.setText(String.valueOf(produto.getPreco()));
         String dir = new File("").getAbsolutePath();
         String caminho = dir + File.separator + "src" + File.separator + "Imagens" + File.separator + produto.getCaminho();
-        
+
         ImageIcon img = new ImageIcon(caminho);
         labelImagem.setIcon(new ImageIcon(img.getImage().getScaledInstance(labelImagem.getWidth(), labelImagem.getHeight(), Image.SCALE_DEFAULT)));
     }
-    
+
     //--------------------INSERINDO ITEM DE PRODUTO---------------------------
-    
-    public void inserirItem(){
+    public void inserirItem() {
         ItemDeProduto itemDeProduto = new ItemDeProduto();
-        int Minutos = Integer.parseInt(spinnerHora.getValue().toString())*60;
-        
-        itemDeProduto.setMinuto(Integer.parseInt(spinnerMinuto.getValue().toString())+Minutos);
-        itemDeProduto.setQuantidade(Integer.parseInt(spinnerQtde.getValue().toString()));
+        int converterHoraMin = Integer.parseInt(spinnerHora.getValue().toString()) * 60;
+        int totalMinutos = Integer.parseInt(spinnerMinuto.getValue().toString()) + converterHoraMin;
+        totalParcial = (((totalMinutos / 30) * produto.getPreco()) * Integer.parseInt(spinnerQtde.getValue().toString()));
+        itemDeProduto.setMinuto(totalMinutos);
+        int qtde = Integer.parseInt(spinnerQtde.getValue().toString());
+        itemDeProduto.setQuantidade(qtde);
         itemDeProduto.setProduto(produto);
-        itemDeProduto.setTotalParcial(11000);
-        
+        itemDeProduto.setTotalParcial(totalParcial);
+
         listaItensProdutos.add(itemDeProduto);
+
+        EntityManager em = JPAUtil.getEntityManager();
+        em.getTransaction().begin();
+        produto.setQuantidade(produto.getQuantidade()-qtde);
+        em.merge(produto);
+        em.getTransaction().commit();
+        em.close();
         JOptionPane.showMessageDialog(null, "Produto adicionado na sua Lista");
     }
-    
-    
-   
-  
+
+    //-----------------------Calcular valor total-----------------
+    public void valorParcial() {
+        int converterHoraMin = Integer.parseInt(spinnerHora.getValue().toString()) * 60;
+        int totalMinutos = Integer.parseInt(spinnerMinuto.getValue().toString()) + converterHoraMin;
+        totalParcial = (((totalMinutos / 30) * produto.getPreco()) * Integer.parseInt(spinnerQtde.getValue().toString()));
+        labelTotalParcial.setText(String.valueOf(totalParcial));
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -84,10 +103,10 @@ public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
         spinnerMinuto = new javax.swing.JSpinner();
         jLabel9 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        labelTotalParcial = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastrar Funcionário");
+        setTitle("Alugar Produto");
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
                 formWindowGainedFocus(evt);
@@ -142,17 +161,40 @@ public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
 
         labelQtde.setText("*********************");
 
-        spinnerQtde.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spinnerQtde.setModel(new javax.swing.SpinnerNumberModel(1, 1, 2, 1));
+        spinnerQtde.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spinnerQtdeStateChanged(evt);
+            }
+        });
+        spinnerQtde.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                spinnerQtdeMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                spinnerQtdeMouseReleased(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel12.setText("Quantidade");
 
         spinnerHora.setModel(new javax.swing.SpinnerNumberModel(0, 0, 8, 1));
+        spinnerHora.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spinnerHoraStateChanged(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel6.setText("Horas");
 
         spinnerMinuto.setModel(new javax.swing.SpinnerNumberModel(30, 0, 30, 30));
+        spinnerMinuto.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spinnerMinutoStateChanged(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel9.setText("Minutos");
@@ -160,8 +202,8 @@ public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel13.setText("Total parcial");
 
-        jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel14.setText("$$$$");
+        labelTotalParcial.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        labelTotalParcial.setText("$$$$");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -205,7 +247,7 @@ public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel13)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(labelTotalParcial, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(100, 100, 100))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -262,7 +304,7 @@ public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(spinnerMinuto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel14)
+                            .addComponent(labelTotalParcial)
                             .addComponent(jLabel13))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -297,10 +339,29 @@ public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        
+
     }//GEN-LAST:event_formWindowGainedFocus
 
-    
+    private void spinnerQtdeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spinnerQtdeMouseReleased
+        valorParcial();
+    }//GEN-LAST:event_spinnerQtdeMouseReleased
+
+    private void spinnerQtdeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spinnerQtdeMousePressed
+        valorParcial();
+    }//GEN-LAST:event_spinnerQtdeMousePressed
+
+    private void spinnerQtdeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerQtdeStateChanged
+        valorParcial();
+    }//GEN-LAST:event_spinnerQtdeStateChanged
+
+    private void spinnerHoraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerHoraStateChanged
+        valorParcial();
+    }//GEN-LAST:event_spinnerHoraStateChanged
+
+    private void spinnerMinutoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerMinutoStateChanged
+        valorParcial();
+    }//GEN-LAST:event_spinnerMinutoStateChanged
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -347,7 +408,6 @@ public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -363,6 +423,7 @@ public class AlugarProdutosTelaInicial extends javax.swing.JFrame {
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelPreco;
     private javax.swing.JLabel labelQtde;
+    private javax.swing.JLabel labelTotalParcial;
     private javax.swing.JSpinner spinnerHora;
     private javax.swing.JSpinner spinnerMinuto;
     private javax.swing.JSpinner spinnerQtde;
